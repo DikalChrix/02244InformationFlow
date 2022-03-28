@@ -1,4 +1,6 @@
 import java.io.*;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.Scanner;
 
 public class main {
@@ -63,5 +65,15 @@ public class main {
 		}
 		
 	}
+	
+	public static boolean bookAppointment(Patient patient, Date date, Boolean type) {
+		
+		
+		patient.addAppointment(date, type);
+		
+		return true;
+		
+	}
+	
 	
 }
