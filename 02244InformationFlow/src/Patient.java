@@ -26,9 +26,9 @@ public class Patient {
 		
 	}
 	
-	public void addAppointment(Date date, boolean type) {
+	public void addAppointment(Date date, boolean type, String location) {
 		
-		Appointment appointment = new Appointment(date, type);
+		Appointment appointment = new Appointment(date, location, type);
 		
 		ArrayList<Appointment> appointmentsNew = getAppointments();
 		appointmentsNew.add(appointment);
