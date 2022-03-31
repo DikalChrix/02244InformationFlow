@@ -1,7 +1,9 @@
 import java.io.*;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
+import java.time.*;
 
 public class main {
 	public static void main(String[] args) {
@@ -185,5 +187,31 @@ public class main {
 		}
 		
 	}
+    public static int pctPositive(Patient[] patientList, Date currentDate, int days){
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd MM yyyy");
+        //LocalDate currentDate = LocalDate.now();  //not used for testing purposes
+        LocalDateTime LDTcurrentDate = currentDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+        LocalDateTime prevDate = LDTcurrentDate.minusDays(days);
+
+        int daysBetween = (int) Duration.between(prevDate,LDTcurrentDate).toDays();
+        int sumPosTests=0;
+        int sumTests=0;
+        for (int i=0; i<patientList.length ;i++){
+            ArrayList<TestEvaluation> currPatientTests = patientList[i].getTests();
+            for(int j=0; j<currPatientTests.size(); j++) {
+                sumTests += currPatientTests.size();
+                if (currPatientTests.get(j).isTestResult()) {
+                    Date testDate = currPatientTests.get(j).getTestDate();
+                    LocalDateTime LDTestDate = testDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+                    if (testDate.before(currentDate) && (int) Duration.between(LDTcurrentDate, LDTestDate).toDays() < daysBetween) {
+                        sumPosTests ++;
+                    }
+                }
+            }
+        }
+
+        return (100*sumPosTests/sumTests);
+
+    }
 	
 }
