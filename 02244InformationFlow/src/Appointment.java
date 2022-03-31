@@ -1,6 +1,6 @@
 import java.util.Date;
 
-public class Appointment {
+public class Appointment { // ALL PATIENT
 	private Date appointmentDate;
 	private boolean type; //True for vaccination, false for testing
 	private String location;

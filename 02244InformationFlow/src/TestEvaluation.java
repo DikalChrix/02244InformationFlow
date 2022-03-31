@@ -1,6 +1,6 @@
 import java.util.Date;
 
-public class TestEvaluation {
+public class TestEvaluation { // ALL PATIENT
 	private Date testDate;
 	private boolean testResult;
 	

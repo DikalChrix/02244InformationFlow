@@ -7,84 +7,65 @@ public class main {
 	public static void main(String[] args) {
 		
 		//Publicate the database
-		Date date = new Date();
-		Date date2 = null;
-		Patient Ahmed = new Patient(0000, true, date);
-		Patient Brian = new Patient(1234, false, date2);
-		Patient Charlotte = new Patient(6969, true, date);
+		Date date = new Date(); // Patient
+		Date date2 = null; // Patient
+		Patient Ahmed = new Patient(0000, true, date); //Patient
+		Patient Brian = new Patient(1234, false, date2); //Patient
+		Patient Charlotte = new Patient(6969, true, date); //Patient
 		
 		
 		//Add patients to "database"
-		ArrayList<Patient> patientData = new ArrayList<Patient>();
-		patientData.add(Ahmed);
-		patientData.add(Brian);
-		patientData.add(Charlotte);
-		
-		
-		
+		ArrayList<Patient> patientData = new ArrayList<Patient>(); //Nurse
+		patientData.add(Ahmed); //Patient -> Nurse
+		patientData.add(Brian); //Patient -> Nurse
+		patientData.add(Charlotte); //Patient -> Nurse
+			
 		//Functionalities:
-		loginFunction();
+		int userCpr = loginFunction(); // Patient
+
+		// Find 
+		for(int i=0; i<patientData.size(); i++) {
+			if(patientData.get(i).getCpr()==userCpr) { // Nurse == Patient
+				loggedInPatient(patientData.get(i));
+				
+				//Test if appointment is logged
+				System.out.println(patientData.get(i).getAppointments().get(0).getLocation());
+			}
+		}
 		
-		
-		
-		
-		
-		//Test
-		
-		
+
 	}
 	
 	
 	
-	
-	public static String loginFunction() {
+	// Input: N/A, Output: Patient
+	public static int loginFunction() {
 		
 		//Create console object
-		Console readInput = System.console();
+		Scanner scanner = new Scanner(System.in);
 		
 		while (true) {
 		
-		System.out.println("Please input your username:");
-		String username = readInput.readLine();
+		System.out.println("Please input your cpr:");
+		String userInput = scanner.nextLine(); // Patient
 		
-		if(checkUsername(username) ) {
+			if(true) {
 			
-			return username; 
-			
-		} else {
-			System.out.println ("Wrong username, please try again");
-		}
+				return Integer.parseInt(userInput); 			
 		
-		}
-		
-		
-	}
-	
-	public static boolean checkUsername(String username) {
-		return true;
-	}
-	
-	public static void readFromFile() {
-	
-		try {
-			Scanner dataReader = new Scanner(new File("C:\\Users\\Kicc7\\Documents\\test.csv"));
-			dataReader.useDelimiter(",");
-			
-			while(dataReader.hasNext()) {
-				System.out.println(dataReader.next());
 			}
-			dataReader.close();
-			
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		
 		}
+		
 		
 	}
 	
+	// Input: Patient, Output: N/A
 	public static void loggedInPatient(Patient patient) {
 		
-		boolean logout = false;
+		boolean logout = false; // Patient
+		
+		Scanner scanner = new Scanner(System.in);
 		
 		while(true) {
 		
@@ -95,12 +76,9 @@ public class main {
 			System.out.println("4 to see vaccination results");
 			System.out.println("5 to logout");
 
-			//Create console object
-			Console readInput = System.console();
+			String input = scanner.nextLine(); // Patient
 
-			String input = readInput.readLine();
-
-			switch (Integer.parseInt(input)) {
+			switch (Integer.parseInt(input)) { // Patient
 			case 1:
 				// Book test appointment
 
@@ -109,43 +87,82 @@ public class main {
 				System.out.println("2: Lyngby, 13th May 2022 09:40 ");
 				System.out.println("3: Holte, 15th May 2022 17:25 ");
 
-				input = readInput.readLine();
+				input = scanner.nextLine(); //Patient
 
-				switch (Integer.parseInt(input)) {
+				switch (Integer.parseInt(input)) { //Patient
 				case 1:
 
-					Date date = new Date();
+					Date date = new Date(1651838440); // Patient
 
-					patient.addAppointment(date, false, "Copenhagen NV");
+					patient.addAppointment(date, false, "Copenhagen NV"); //Patient
 					System.out.println("Test appointment booked!");
 					break;
 				case 2:
 
-					Date date2 = new Date();
+					Date date2 = new Date(1652431200); //Patient
 
-					patient.addAppointment(date2, false, "Lyngby");
+					patient.addAppointment(date2, false, "Lyngby"); //Patient
 					System.out.println("Test appointment booked!");
 					break;
 				case 3:
 
-					Date date3 = new Date();
+					Date date3 = new Date(1652631900); //Patient
 
-					patient.addAppointment(date3, false, "Holte");
+					patient.addAppointment(date3, false, "Holte"); //Patient
 					System.out.println("Test appointment booked!");
+					break;
+				default:
 					break;
 				}
 				
+				break;
+			case 2:
+				// Book vaccination appointment
 
+				System.out.println("Possible locations and dates for vaccination: ");
+				System.out.println("1: Copenhagen NV, 6th May 2022 13:00 ");
+				System.out.println("2: Lyngby, 13th May 2022 09:40 ");
+				System.out.println("3: Holte, 15th May 2022 17:25 ");
 
+				input = scanner.nextLine(); //Patient
 
+				switch (Integer.parseInt(input)) { //Patient
+				case 1:
 
-				break;	
+					Date date = new Date(1651838440); //Patient
+
+					patient.addAppointment(date, true, "Copenhagen NV"); //Patient
+					System.out.println("Vaccination appointment booked!");
+					break;
+				case 2:
+
+					Date date2 = new Date(1652431200); //Patient
+
+					patient.addAppointment(date2, true, "Lyngby"); //Patient
+					System.out.println("Vaccination appointment booked!");
+					break;
+				case 3:
+
+					Date date3 = new Date(1652631900); //Patient
+
+					patient.addAppointment(date3, true, "Holte"); //Patient
+					System.out.println("Vacciniatoin appointment booked!");
+					break;
+				default:
+					break;
+				}
+				break;
+			case 3:
+				break;
+			case 4:
+				break;
 			default:
 				System.out.println("You have now been logged out");
 				logout = true;
 			}
 			
 			if(logout) {
+				scanner.close();
 				break;
 			}
  

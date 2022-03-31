@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Patient {
+public class Patient { // ALL PATIENT
 	private int cpr; 
 	private boolean vaccinated;
 	private Date vaccinationDate;
@@ -33,7 +33,6 @@ public class Patient {
 		ArrayList<Appointment> appointmentsNew = getAppointments();
 		appointmentsNew.add(appointment);
 		setAppointments(appointmentsNew);
-		
 	}
 
 	public int getCpr() {
