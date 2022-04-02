@@ -24,7 +24,7 @@ public class Appointment { // ALL PATIENT
 	}
 
 
-	public boolean isType() {
+	public boolean getType() {
 		return type;
 	}
 
