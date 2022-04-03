@@ -16,10 +16,10 @@ public class main {
 		Patient Charlotte = new Patient(6969, true, date); //Patient
 		
 		//Add previous appointments
-		Charlotte.addAppointment(date, true, "Holte");
-		Brian.addAppointment(date, false, "Holte");
-		Ahmed.addTestEvaluation(date, true);
-		Charlotte.addTestEvaluation(date, false);
+		Charlotte.addAppointment(date, true, "Holte"); // Patient
+		Brian.addAppointment(date, false, "Holte"); // Patient
+		Ahmed.addTestEvaluation(date, true); // Patient
+		Charlotte.addTestEvaluation(date, false); //Patient
 		
 		
 		//Add patients to "database"
@@ -60,7 +60,7 @@ public class main {
 		System.out.println("1: Login to the system");
 		System.out.println("2: Print statistical reprot");
 		
-		String userInput = scanner.nextLine(); // Patient
+		String userInput = scanner.nextLine(); // Public
 		
 		switch (Integer.parseInt(userInput)) {
 		case 1:
@@ -75,9 +75,9 @@ public class main {
 				}	
 		case 2:
 			System.out.println("Current Statistics:");
-			Date date = new Date();
-			System.out.println("Positive percent last 7 days: "+pctPositive(patientData,date,7)+"%");
-			System.out.println("Number of vaccinations last 7 days: "+numVaccinated(patientData,date,7));
+			Date date = new Date();  // Public
+			System.out.println("Positive percent last 7 days: "+pctPositive(patientData,7)+"%");
+			System.out.println("Number of vaccinations last 7 days: "+numVaccinated(patientData,7));
 			
 			System.exit(0);
 			return 0;
@@ -214,51 +214,49 @@ public class main {
 		
 	}
 
-	public static int pctPositive(ArrayList<Patient>patientList, Date currentDate, int days){
-		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd MM yyyy");
-		//LocalDate currentDate = LocalDate.now();  //not used for testing purposes
-		LocalDateTime LDTcurrentDate = currentDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
-		LocalDateTime prevDate = LDTcurrentDate.minusDays(days);
+	// Input: (Nurse, Public), Output: Public
+	public static int pctPositive(ArrayList<Patient>patientList, int days){
+		Date currentDate = new Date(); // Public
+		LocalDateTime LDTcurrentDate = currentDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime(); // Public
+		LocalDateTime prevDate = LDTcurrentDate.minusDays(days); // Public
 
-		int daysBetween = (int) Duration.between(prevDate,LDTcurrentDate).toDays();
-		int sumPosTests=0;
-		int sumTests=0;
+		int daysBetween = (int) Duration.between(prevDate,LDTcurrentDate).toDays(); // Public
+		int sumPosTests=0; // Public
+		int sumTests=0; // Public
 		for (int i=0; i<patientList.size() ;i++){
-			ArrayList<TestEvaluation> currPatientTests = patientList.get(i).getTests();
+			ArrayList<TestEvaluation> currPatientTests = patientList.get(i).getTests(); // Patient
 			for(int j=0; j<currPatientTests.size(); j++) {
-				Date testDate = currPatientTests.get(j).getTestDate();
-				LocalDateTime LDTTestDate = testDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
-				//System.out.println((int) Duration.between(LDTTestDate,LDTcurrentDate).toDays());
-				if (testDate.before(currentDate) && (int) Duration.between(LDTTestDate,LDTcurrentDate).toDays() < daysBetween) {
-					sumTests ++;
-					if (currPatientTests.get(j).isTestResult()) {
-						sumPosTests ++;
+				Date testDate = currPatientTests.get(j).getTestDate(); // Patient
+				LocalDateTime LDTTestDate = testDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime(); // Patient
+				if (testDate.before(currentDate) && (int) Duration.between(LDTTestDate,LDTcurrentDate).toDays() < daysBetween) { // Patient && Patient < Public
+					sumTests ++; // Public
+					if (currPatientTests.get(j).isTestResult()) { // Patient
+						sumPosTests ++; // Public
 					}
 				}
 			}
 		}
-		if(sumTests==0){
+		if(sumTests==0){ // Public
 			sumTests = 1;
 		}
 		return (100*sumPosTests/sumTests);
 	}
 	
-	public static int numVaccinated(ArrayList<Patient>patientList, Date currentDate, int days) {
-		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd MM yyyy");
-		//LocalDate currentDate = LocalDate.now();  //not used for testing purposes
-		LocalDateTime LDTcurrentDate = currentDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
-		LocalDateTime prevDate = LDTcurrentDate.minusDays(days);
+	// Input: (Nurse, Public), Output: Public
+	public static int numVaccinated(ArrayList<Patient>patientList, int days) {
+		Date currentDate = new Date(); // Public
+		LocalDateTime LDTcurrentDate = currentDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime(); // Public
+		LocalDateTime prevDate = LDTcurrentDate.minusDays(days); // Public
 
-		int daysBetween = (int) Duration.between(prevDate,LDTcurrentDate).toDays();
-		int sumVaccs=0;
+		int daysBetween = (int) Duration.between(prevDate,LDTcurrentDate).toDays(); // Public
+		int sumVaccs=0; // Public
 		for (int i=0; i<patientList.size() ;i++){
-			ArrayList<Appointment> patientAppointments = patientList.get(i).getAppointments();
+			ArrayList<Appointment> patientAppointments = patientList.get(i).getAppointments(); // Patient
 			for(int j=0; j<patientAppointments.size(); j++) {
-				Appointment currAppointment = patientAppointments.get(j);
-				Date vaccDate = currAppointment.getAppointmentDate();
-				LocalDateTime LDTTestDate = vaccDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
-				//System.out.println((int) Duration.between(LDTTestDate,LDTcurrentDate).toDays());
-				if (vaccDate.before(currentDate) && (int) Duration.between(LDTTestDate,LDTcurrentDate).toDays() < daysBetween && currAppointment.getType()==true) {
+				Appointment currAppointment = patientAppointments.get(j); // Patient
+				Date vaccDate = currAppointment.getAppointmentDate(); // Patient
+				LocalDateTime LDTTestDate = vaccDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime(); // Patient
+				if (vaccDate.before(currentDate) && (int) Duration.between(LDTTestDate,LDTcurrentDate).toDays() < daysBetween && currAppointment.getType()==true) { // Patient && Patient < Public && Patient
 					sumVaccs ++;
 				}
 			}
