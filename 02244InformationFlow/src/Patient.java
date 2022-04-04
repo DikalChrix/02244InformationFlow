@@ -67,6 +67,13 @@ public class Patient { // ALL PATIENT
 		this.tests = tests;
 	}
 
+	public TestEvaluation getTest(int testNr) {
+		int testLen = this.getTests().size();
+		if (testLen>0) {
+			return tests.get(testNr);
+		}else{return null;}
+	}
+
 	public ArrayList<Appointment> getAppointments() {
 		return appointments;
 	}

@@ -40,7 +40,7 @@ public class main {
 				loggedInPatient(patientData.get(i));
 				
 				//Test if appointment is logged
-				System.out.println(patientData.get(i).getAppointments().get(0).getLocation());
+				//System.out.println(patientData.get(i).getAppointments().get(0).getLocation());
 			}
 		}
 		
@@ -181,8 +181,15 @@ public class main {
 				}
 				break;
 			case 3:
+				int testLen = patient.getTests().size();
+				TestEvaluation lstTstEval = patient.getTest(testLen-1);
+				if (testLen > 0) {
+					System.out.println("Last test result: " + lstTstEval.isTestResult() + "\n");
+				}else{System.out.println("No tests found\n");}
+
 				break;
 			case 4:
+				System.out.println("Vaccination status: "+patient.isVaccinated()+"\n");
 				break;
 			default:
 				System.out.println("You have now been logged out");
