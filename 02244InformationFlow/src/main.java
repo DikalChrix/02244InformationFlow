@@ -9,41 +9,40 @@ public class main {
 	public static void main(String[] args) {
 		
 		//Publicate the database
-		Date date = new Date(); // Patient
-		Date date2 = null; // Patient
-		Patient Ahmed = new Patient(0000, true, date); //Patient
-		Patient Brian = new Patient(1234, false, date2); //Patient
-		Patient Charlotte = new Patient(6969, true, date); //Patient
+		Date date = new Date(); // {Patient:Patient,Nurse}
+		Date date2 = null; // {Patient:Patient,Nurse}
+		Patient Ahmed = new Patient(0000, true, date); //{Patient:Patient,Nurse}
+		Patient Brian = new Patient(1234, false, date2); //{Patient:Patient,Nurse}
+		Patient Charlotte = new Patient(6969, true, date); //{Patient:Patient,Nurse}
 		
 		//Add previous appointments
-		Charlotte.addAppointment(date, true, "Holte"); // Patient
-		Brian.addAppointment(date, false, "Holte"); // Patient
-		Ahmed.addTestEvaluation(date, true); // Patient
-		Charlotte.addTestEvaluation(date, false); //Patient
+		Charlotte.addAppointment(date, true, "Holte"); // {Patient:Patient,Nurse}
+		Brian.addAppointment(date, false, "Holte"); // {Patient:Patient,Nurse}
+		Ahmed.addTestEvaluation(date, true); // {Patient:Patient,Nurse}
+		Charlotte.addTestEvaluation(date, false); //{Patient:Patient,Nurse}
 		
 		
 		//Add patients to "database"
-		ArrayList<Patient> patientData = new ArrayList<Patient>(); //Nurse
-		patientData.add(Ahmed); //Patient -> Nurse
-		patientData.add(Brian); //Patient -> Nurse
-		patientData.add(Charlotte); //Patient -> Nurse
+		ArrayList<Patient> patientData = new ArrayList<Patient>(); //Nurse {Nurse:Nurse}
+		patientData.add(Ahmed); //Patient -> Nurse {Patient:Nurse,Nurse:Nurse}
+		patientData.add(Brian); //Patient -> Nurse {Patient:Nurse,Nurse:Nurse}
+		patientData.add(Charlotte); //Patient -> Nurse {Patient:Nurse,Nurse:Nurse}
 		
 		
 		
 			
 		//Functionalities:
-		int userCpr = loginFunction(patientData); // Patient
+		int userCpr = loginFunction(patientData); // Patient {Patient:Patient}
 
 		// Find 
 		for(int i=0; i<patientData.size(); i++) {
-			if(patientData.get(i).getCpr()==userCpr) { // Nurse == Patient
+			if(patientData.get(i).getCpr()==userCpr) { // Nurse == Patient {}
 				loggedInPatient(patientData.get(i));
 				
 				//Test if appointment is logged
 				//System.out.println(patientData.get(i).getAppointments().get(0).getLocation());
 			}
 		}
-		
 
 	}
 	
