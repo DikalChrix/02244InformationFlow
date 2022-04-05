@@ -36,19 +36,18 @@ public class main {
 
 		// Find 
 		for(int i=0; i<patientData.size(); i++) {
-			if(patientData.get(i).getCpr()==userCpr) { // Nurse == Patient {}
+			if(patientData.get(i).getCpr()==userCpr) { // {Patient:Patient}
 				loggedInPatient(patientData.get(i));
 				
 				//Test if appointment is logged
 				//System.out.println(patientData.get(i).getAppointments().get(0).getLocation());
 			}
 		}
-
 	}
 	
 	
 	
-	// Input: N/A, Output: Patient
+	// Input: {Nurse:Nurse}, Output: {Patient:Patient}
 	public static int loginFunction(ArrayList<Patient> patientData) {
 		
 		//Create console object
@@ -59,13 +58,13 @@ public class main {
 		System.out.println("1: Login to the system");
 		System.out.println("2: Print statistical reprot");
 		
-		String userInput = scanner.nextLine(); // Public
+		String userInput = scanner.nextLine(); // {Patient: Nurse, Patient, Public}, {Public: Nurse, Patient, Public}
 		
 		switch (Integer.parseInt(userInput)) {
 		case 1:
 			while (true) {				
 				System.out.println("Please input your cpr:");
-				userInput = scanner.nextLine(); // Patient				
+				userInput = scanner.nextLine(); // {Patient: Patient}				
 					if(true) {
 					
 						return Integer.parseInt(userInput); 							
@@ -74,23 +73,22 @@ public class main {
 				}	
 		case 2:
 			System.out.println("Current Statistics:");
-			Date date = new Date();  // Public
 			System.out.println("Positive percent last 7 days: "+pctPositive(patientData,7)+"%");
 			System.out.println("Number of vaccinations last 7 days: "+numVaccinated(patientData,7));
 			
-			System.exit(0);
+			System.exit(0); // {Public: Public}
 			return 0;
 		default:
-			System.exit(0);
+			System.exit(0); // {Public: Public}
 			return 0;
 		}
 	
 	}
 	
-	// Input: Patient, Output: N/A
+	// Input: // {Patient:Patient,Nurse}, Output: N/A
 	public static void loggedInPatient(Patient patient) {
 		
-		boolean logout = false; // Patient
+		boolean logout = false; // {Patient:Patient}
 		
 		Scanner scanner = new Scanner(System.in);
 		
@@ -103,9 +101,9 @@ public class main {
 			System.out.println("4 to see vaccination results");
 			System.out.println("5 to logout");
 
-			String input = scanner.nextLine(); // Patient
+			String input = scanner.nextLine(); // {Patient:Patient}
 
-			switch (Integer.parseInt(input)) { // Patient
+			switch (Integer.parseInt(input)) { // {Patient:Patient}
 			case 1:
 				// Book test appointment
 
@@ -114,28 +112,28 @@ public class main {
 				System.out.println("2: Lyngby, 13th May 2022 09:40 ");
 				System.out.println("3: Holte, 15th May 2022 17:25 ");
 
-				input = scanner.nextLine(); //Patient
+				input = scanner.nextLine(); // {Patient:Patient}
 
-				switch (Integer.parseInt(input)) { //Patient
+				switch (Integer.parseInt(input)) { // {Patient:Patient}
 				case 1:
 
-					Date date = new Date(1651838440); // Patient
+					Date date = new Date(1651838440); // {Patient:Patient}
 
-					patient.addAppointment(date, false, "Copenhagen NV"); //Patient
+					patient.addAppointment(date, false, "Copenhagen NV"); // {Patient:Patient, Nurse} := {Patient: Patient}
 					System.out.println("Test appointment booked!");
 					break;
 				case 2:
 
-					Date date2 = new Date(1652431200); //Patient
+					Date date2 = new Date(1652431200); // {Patient:Patient}
 
-					patient.addAppointment(date2, false, "Lyngby"); //Patient
+					patient.addAppointment(date2, false, "Lyngby"); // {Patient:Patient, Nurse} := {Patient: Patient}
 					System.out.println("Test appointment booked!");
 					break;
 				case 3:
 
-					Date date3 = new Date(1652631900); //Patient
+					Date date3 = new Date(1652631900); // {Patient:Patient}
 
-					patient.addAppointment(date3, false, "Holte"); //Patient
+					patient.addAppointment(date3, false, "Holte"); // {Patient:Patient, Nurse} := {Patient: Patient}
 					System.out.println("Test appointment booked!");
 					break;
 				default:
@@ -151,28 +149,28 @@ public class main {
 				System.out.println("2: Lyngby, 13th May 2022 09:40 ");
 				System.out.println("3: Holte, 15th May 2022 17:25 ");
 
-				input = scanner.nextLine(); //Patient
+				input = scanner.nextLine(); // {Patient:Patient}
 
-				switch (Integer.parseInt(input)) { //Patient
+				switch (Integer.parseInt(input)) { // {Patient:Patient}
 				case 1:
 
-					Date date = new Date(1651838440); //Patient
+					Date date = new Date(1651838440); // {Patient:Patient}
 
-					patient.addAppointment(date, true, "Copenhagen NV"); //Patient
+					patient.addAppointment(date, true, "Copenhagen NV"); // {Patient:Patient, Nurse} := {Patient: Patient}
 					System.out.println("Vaccination appointment booked!");
 					break;
 				case 2:
 
-					Date date2 = new Date(1652431200); //Patient
+					Date date2 = new Date(1652431200); // {Patient:Patient}
 
-					patient.addAppointment(date2, true, "Lyngby"); //Patient
+					patient.addAppointment(date2, true, "Lyngby"); // {Patient:Patient, Nurse} := {Patient: Patient}
 					System.out.println("Vaccination appointment booked!");
 					break;
 				case 3:
 
-					Date date3 = new Date(1652631900); //Patient
+					Date date3 = new Date(1652631900); // {Patient:Patient}
 
-					patient.addAppointment(date3, true, "Holte"); //Patient
+					patient.addAppointment(date3, true, "Holte"); // {Patient:Patient, Nurse} := {Patient: Patient}
 					System.out.println("Vacciniatoin appointment booked!");
 					break;
 				default:
@@ -180,8 +178,8 @@ public class main {
 				}
 				break;
 			case 3:
-				int testLen = patient.getTests().size();
-				TestEvaluation lstTstEval = patient.getTest(testLen-1);
+				int testLen = patient.getTests().size(); // {Patient:Patient, Nurse}
+				TestEvaluation lstTstEval = patient.getTest(testLen-1); // {Patient:Patient, Nurse}
 				if (testLen > 0) {
 					System.out.println("Last test result: " + lstTstEval.isTestResult() + "\n");
 				}else{System.out.println("No tests found\n");}
@@ -195,7 +193,7 @@ public class main {
 				logout = true;
 			}
 			
-			if(logout) {
+			if(logout) { // {Patient:Patient}
 				scanner.close();
 				break;
 			}
@@ -220,24 +218,24 @@ public class main {
 		
 	}
 
-	// Input: (Nurse, Public), Output: Public
+	// Input: {Nurse: Nurse}, {Public: Nurse, Patient,Public} Output: {Public: Nurse, Patient, Public}
 	public static int pctPositive(ArrayList<Patient>patientList, int days){
-		Date currentDate = new Date(); // Public
-		LocalDateTime LDTcurrentDate = currentDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime(); // Public
-		LocalDateTime prevDate = LDTcurrentDate.minusDays(days); // Public
+		Date currentDate = new Date(); // {Public: Nurse, Patient, Public}
+		LocalDateTime LDTcurrentDate = currentDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime(); // {Public: Nurse, Patient, Public}
+		LocalDateTime prevDate = LDTcurrentDate.minusDays(days); // {Public: Nurse, Patient, Public}
 
-		int daysBetween = (int) Duration.between(prevDate,LDTcurrentDate).toDays(); // Public
-		int sumPosTests=0; // Public
-		int sumTests=0; // Public
+		int daysBetween = (int) Duration.between(prevDate,LDTcurrentDate).toDays(); // {Public: Nurse, Patient, Public}
+		int sumPosTests=0; // {Public: Nurse, Patient, Public}
+		int sumTests=0; // {Public: Nurse, Patient, Public}
 		for (int i=0; i<patientList.size() ;i++){
-			ArrayList<TestEvaluation> currPatientTests = patientList.get(i).getTests(); // Patient
+			ArrayList<TestEvaluation> currPatientTests = patientList.get(i).getTests(); // {Patient: Nurse, Patient}
 			for(int j=0; j<currPatientTests.size(); j++) {
-				Date testDate = currPatientTests.get(j).getTestDate(); // Patient
-				LocalDateTime LDTTestDate = testDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime(); // Patient
-				if (testDate.before(currentDate) && (int) Duration.between(LDTTestDate,LDTcurrentDate).toDays() < daysBetween) { // Patient && Patient < Public
-					sumTests ++; // Public
-					if (currPatientTests.get(j).isTestResult()) { // Patient
-						sumPosTests ++; // Public
+				Date testDate = currPatientTests.get(j).getTestDate(); // {Patient: Nurse, Patient}
+				LocalDateTime LDTTestDate = testDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime(); // {Patient: Nurse, Patient}
+				if (testDate.before(currentDate) && (int) Duration.between(LDTTestDate,LDTcurrentDate).toDays() < daysBetween) { // {Patient: Nurse, Patient} && {Patient: Nurse, Patient} < {Public: Nurse, Patient, Public} => {Patient: Nurse, Patient} 
+					sumTests ++; // {Public: Nurse, Patient, Public}
+					if (currPatientTests.get(j).isTestResult()) { // {Patient: Nurse, Patient}
+						sumPosTests ++; // {Public: Nurse, Patient, Public}
 					}
 				}
 			}
@@ -248,7 +246,7 @@ public class main {
 		return (100*sumPosTests/sumTests);
 	}
 	
-	// Input: (Nurse, Public), Output: Public
+	// Input: {Nurse: Nurse}, {Public: Nurse, Public} Output: {Public: Nurse, Public}
 	public static int numVaccinated(ArrayList<Patient>patientList, int days) {
 		Date currentDate = new Date(); // Public
 		LocalDateTime LDTcurrentDate = currentDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime(); // Public
