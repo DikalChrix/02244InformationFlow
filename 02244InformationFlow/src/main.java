@@ -51,7 +51,7 @@ public class main {
 
 
 
-	// Input: {Nurse:Nurse}, Output: {Patient:Patient}
+	// Input: {Nurse:Nurse}, Output: {Patient:Patient} TODO declassify somewhere?
 	public static int loginFunction(ArrayList<Patient> patientData) {
 
 		//Create console object
@@ -185,7 +185,7 @@ public class main {
 					Date date3 = new Date(1652631900); // {Patient:Patient}
 
 					patient.addAppointment(date3, true, "Holte"); // {Patient:Patient, Nurse} := {Patient: Patient}
-					System.out.println("Vacciniatoin appointment booked!");
+					System.out.println("Vaccination appointment booked!");
 					break;
 				default:
 					break;
@@ -195,12 +195,12 @@ public class main {
 				int testLen = patient.getTests().size(); // {Patient:Patient, Nurse}
 				TestEvaluation lstTstEval = patient.getTest(testLen-1); // {Patient:Patient, Nurse}
 				if (testLen > 0) {
-					System.out.println("Last test result: " + lstTstEval.isTestResult() + "\n");
+					System.out.println("Last test result: " + lstTstEval.isTestResult() + "\n"); // {Patient:Patient, Nurse}
 				}else{System.out.println("No tests found\n");}
 
 				break;
 			case 4:
-				System.out.println("Vaccination status: "+patient.isVaccinated()+"\n");
+				System.out.println("Vaccination status: "+patient.isVaccinated()+"\n"); // {Patient:Patient, Nurse}
 				break;
 			default:
 				System.out.println("You have now been logged out");
@@ -215,6 +215,7 @@ public class main {
 		}
 	}
 
+	// Input: {Nurse:Nurse}, Output: N/A
 	public static void loggedInNurse(ArrayList<Patient> patients) {
         Scanner scanner = new Scanner(System.in);
 		boolean logout = false;
@@ -223,11 +224,11 @@ public class main {
         String userInput = scanner.nextLine();
         for(int i = 0; i<patients.size(); i++) {
             if (Integer.parseInt(userInput) == patients.get(i).getCpr()) {
-                p = patients.get(i);
+                p = patients.get(i); // {Patient:Patient,Nurse} := {Nurse:Nurse} TODO declassify
                 break;
             }
-
         }
+
 		while(true) {
 
 			System.out.println("Welcome, what would you like to do?");
@@ -245,26 +246,33 @@ public class main {
                 break;
             case 2:
                 System.out.println("add vaccination result to patient");
+                p.setVaccinated(true);
+                ArrayList <Appointment> pAppointment = p.getAppointments(); // {Patient:Patient,Nurse}
+                for(int i = 0; i<pAppointment.size(); i++){
+                	if(pAppointment.get(i).getType()){ // {Patient:Patient,Nurse}
+                		p.setVaccinationDate((pAppointment.get(i).getAppointmentDate())); // {Patient:Patient,Nurse}
+					}
+				}
+
                 break;
             case 3:
 
-                ArrayList<TestEvaluation> pTests=p.getTests();
-                System.out.println("Test data from patient: "+p.getCpr());
+                ArrayList<TestEvaluation> pTests=p.getTests(); // {Patient:Patient,Nurse}
+                System.out.println("Test data from patient: "+p.getCpr()); // {Patient:Patient} TODO declassify
                 for(int j = 0; j<pTests.size();j++) {
-                    System.out.println("Test date: "+pTests.get(j).getTestDate()+"\n\rTest result: "+pTests.get(j).isTestResult()+"\n\r");
+                    System.out.println("Test date: "+pTests.get(j).getTestDate()+"\n\rTest result: "+pTests.get(j).isTestResult()+"\n\r"); // {Patient:Patient,Nurse}
                 }
                  break;
             case 4:
-
-                System.out.println("See vaccination results of patient");
+				System.out.println("Vaccination status from patient ("+p.getCpr()+"): "+p.isVaccinated()+"\n\r"); // {Patient:Patient} , {Patient:Patient,Nurse} TODO declassify
                 break;
 
             case 5:
                 System.out.println("Enter cpr of patient");
-                userInput = scanner.nextLine();
+                userInput = scanner.nextLine(); // {Nurse:Nurse}
                 for(int i = 0; i<patients.size(); i++) {
                     if (Integer.parseInt(userInput) == patients.get(i).getCpr()) {
-                        p = patients.get(i);
+                        p = patients.get(i); // {Patient:Patient,Nurse} := {Nurse:Nurse} TODO declassify
                         break;
                     }
 
