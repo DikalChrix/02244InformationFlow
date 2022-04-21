@@ -34,19 +34,17 @@ public class main {
 		//Functionalities:
 		int userCpr = loginFunction(patientData); // Patient {Patient:Patient} | {Patient:Patient}
 
-        if(userCpr>9999){
-            loggedInNurse(patientData); // TODO set classification
-        }else {
-            // Find
-            for (int i = 0; i < patientData.size(); i++) {
-                if (patientData.get(i).getCpr() == userCpr) { // {Patient:Patient}
-                    loggedInPatient(patientData.get(i));
 
-                    //Test if appointment is logged
-                    //System.out.println(patientData.get(i).getAppointments().get(0).getLocation());
-                }
-            }
-        }
+		// Find
+		for (int i = 0; i < patientData.size(); i++) {
+			if (patientData.get(i).getCpr() == userCpr) { // {Patient:Patient}
+				loggedInPatient(patientData.get(i));
+
+				//Test if appointment is logged
+				//System.out.println(patientData.get(i).getAppointments().get(0).getLocation());
+			}
+		}
+
 	}
 
 
@@ -87,6 +85,7 @@ public class main {
                 System.out.println("Please input nurse login:"); // {} | {}
                 userInput = scanner.nextLine(); // {Nurse: Nurse} | {Nurse: Nurse} -> TODO analyse flow
                 if(true) {
+					loggedInNurse(patientData); // TODO set classification
                     return Integer.parseInt(userInput);
                 }
 
