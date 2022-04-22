@@ -35,7 +35,7 @@ public class Patient { // {Patient: Patient, Nurse} | {Patient: Nurse}
 		setAppointments(appointmentsNew);  // {Patient:Patient,Nurse} | {Patient:Patient} -> {Patient:Patient,Nurse} | {Patient:Patient}
 	}
 
-	public int getCpr() {// in{MAYBE DECLASSIFY},out {Patient:Patient} | {top} TODO declassify? 
+	public int getCpr() {// in{MAYBE DECLASSIFY},out {Patient:Patient} | {Patient: top} TODO declassify? 
 		return cpr;
 	}
 

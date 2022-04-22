@@ -32,7 +32,7 @@ public class main {
 
 
 		//Functionalities:
-		int userCpr = loginFunction(patientData); // Patient {Patient:Patient} | {Patient:Patient}
+		int userCpr = loginFunction(patientData); // {Patient:Patient} | {Patient:Patient}
 
         if(userCpr>9999){
             loggedInNurse(patientData); // TODO set classification
@@ -260,7 +260,7 @@ public class main {
                 ArrayList<TestEvaluation> pTests=p.getTests(); // {Patient:Patient,Nurse} | {Patient: Nurse} -> {Patient:Patient,Nurse} | {Patient: Nurse}
                 System.out.println("Test data from patient: "+p.getCpr()); // {Nurse: Nurse} | {top} TODO declassify
                 for(int j = 0; j<pTests.size();j++) {
-                    System.out.println("Test date: "+pTests.get(j).getTestDate()+"\n\rTest result: "+pTests.get(j).isTestResult()+"\n\r"); // //{Patient:Patient,Nurse} | {Patient: Nurse} ->  {Nurse: Nurse} | {top} TODO explicit flow
+                    System.out.println("Test date: "+pTests.get(j).getTestDate()+"\n\rTest result: "+pTests.get(j).isTestResult()+"\n\r"); //	{Patient:Patient,Nurse} | {Patient: Nurse} ->  {Nurse: Nurse} | {top} TODO explicit flow
                 }
                  break;
             case 4:
