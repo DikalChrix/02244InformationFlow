@@ -60,7 +60,7 @@ public class main {
 		System.out.println("1: Login to the system"); // {} | {}
 		System.out.println("2: Print statistical reprot"); // {} | {}
         System.out.println("3: Login as nurse"); // {} | {}
-		String userInput = scanner.nextLine(); // {Patient: Patient, Nurse: Nurse} | {Patient: Patient, Nurse: Nurse} 
+		String userInput = scanner.nextLine(); // {Patient: Patient, Nurse: Nurse, Public: Public} | {Patient: Patient, Nurse: Nurse, Public: Public} 
 
 		switch (Integer.parseInt(userInput)) {
 		case 1:
@@ -231,27 +231,57 @@ public class main {
 		while(true) {
 
 			System.out.println("Welcome, what would you like to do?"); // {} | {}
-			System.out.println("1 to add test result to patient"); // {} | {}
-			System.out.println("2 to add vaccination result to patient"); // {} | {}
+			System.out.println("1 to add test result to latest test appointment of patient"); // {} | {}
+			System.out.println("2 to set vaccination status as of patient as vaccinated"); // {} | {}
 			System.out.println("3 to see test results of patient"); // {} | {}
-			System.out.println("4 to see vaccination results of patient"); // {} | {}
+			System.out.println("4 to see vaccination status of patient"); // {} | {}
             System.out.println("5 to select another patient"); // {} | {}
 			System.out.println("6 to logout"); // {} | {}
             userInput = scanner.nextLine(); // {Nurse:Nurse} | {Nurse:Nurse} -> {Nurse:Nurse} | {Nurse:Nurse}
+            
+            ArrayList <Appointment> pAppointment = p.getAppointments(); // {Patient:Patient,Nurse} | {Patient: Patient} -> {Patient:Patient,Nurse} | {Patient:Patient} 
+            
             switch (Integer.parseInt(userInput)) { // {Nurse:Nurse} | {Nurse:Nurse} TODO implicit flow
 
+            
+            
             case 1:
-                System.out.println("add test result to patient"); // {Nurse: Nurse} | {top}
+            	
+            	System.out.println("What was the test result of the patient?"); // {} | {}
+            	System.out.println("0 for Negative"); // {} | {}
+            	System.out.println("1 for Positive"); // {} | {}
+            	
+            	userInput = scanner.nextLine(); // {Nurse:Nurse} | {Nurse:Nurse} -> {Nurse:Nurse} | {Nurse:Nurse}
+            	            	
+            	// Find latest appointment         
+               
+                Date date = new Date(1000000000); // {} | {}
+                Appointment latestAppointment =  new Appointment(date, "", true); // {Nurse:Nurse} | {Nurse:Nurse} -> // {Nurse:Nurse} | {Nurse:Nurse} 
+                for(int i = 0; i<pAppointment.size(); i++){
+                	if(!pAppointment.get(i).getType() & pAppointment.get(i).getAppointmentDate().after(latestAppointment.getAppointmentDate())){ // {Patient:Patient,Nurse} | {Patient:Patient} TODO implicit flow
+                		latestAppointment = pAppointment.get(i);  // {Patient:Patient, Nurse} | {Patient:Patient} -> // {Nurse:Nurse} | {Nurse:Nurse}
+					}
+				}
+                
+                // Add test evaluation
+                if (Integer.parseInt(userInput) == 0) { // {Nurse:Nurse} | {Nurse:Nurse} TODO implicit flow
+                	p.addTestEvaluation(latestAppointment.getAppointmentDate(), false); // {Nurse:Nurse} | {Nurse:Nurse} -> {Patient:Patient,Nurse} | {Patient: Patient} TODO explicit flow
+                }
+                else {
+                	p.addTestEvaluation(latestAppointment.getAppointmentDate(), true); // {Nurse:Nurse} | {Nurse:Nurse} -> {Patient:Patient,Nurse} | {Patient: Patient} TODO explicit flow
+                }
+                System.out.println("Test result added to patient!"); // {Nurse: Nurse} | {top}
+                                
                 break;
+                
             case 2:
-                System.out.println("add vaccination result to patient"); // {Nurse: Nurse} | {top}
                 p.setVaccinated(true); // TODO change owners? 
-                ArrayList <Appointment> pAppointment = p.getAppointments(); // {Patient:Patient,Nurse} | {Patient: Patient} -> {Patient:Patient,Nurse} | {Patient:Patient} 
                 for(int i = 0; i<pAppointment.size(); i++){
                 	if(pAppointment.get(i).getType()){ // {Patient:Patient,Nurse} | {Patient:Patient} TODO implicit flow
                 		p.setVaccinationDate((pAppointment.get(i).getAppointmentDate())); // {Patient:Patient} | {Patient: top,Nurse} -> {Patient:Patient,Nurse} | {Patient: Nurse}
 					}
 				}
+                System.out.println("Vaccination status of the patient updated!"); // {Nurse: Nurse} | {top}
 
                 break;
             case 3:
