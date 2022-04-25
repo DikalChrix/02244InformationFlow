@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Patient { // {Patient: Patient, Nurse} | {Patient: Nurse}
+ class Patient { // {Patient: Patient, Nurse} | {Patient: Nurse}
 	private int cpr; //{Patient:Patient} | {}
 	private boolean vaccinated; //{Patient:Patient,Nurse} | {Patient: Nurse} 
 	private Date vaccinationDate; //{Patient:Patient,Nurse} | {Patient: Nurse}
@@ -9,14 +9,14 @@ public class Patient { // {Patient: Patient, Nurse} | {Patient: Nurse}
 	private ArrayList<Appointment> appointments = new ArrayList<Appointment>(); //{Patient:Patient,Nurse} | {Patient: Patient}
 	
 	
-	public Patient(int cprInit, boolean vaccinatedInit, Date vaccinationDateInit) { //in{Patient:Patient} | {Patient: top} ,out{Patient:Patient,Nurse} | {Patient: Nurse}  TODO check Admin
+	 Patient(int cprInit, boolean vaccinatedInit, Date vaccinationDateInit) { //in{Patient:Patient} | {Patient: top} ,out{Patient:Patient,Nurse} | {Patient: Nurse}  TODO check Admin
 		setCpr(cprInit);
 		setVaccinated(vaccinatedInit);
 		setVaccinationDate(vaccinationDateInit);
 		
 	}
 	
-	public void addTestEvaluation(Date date, boolean testResult) { // in{Patient:Patient,Nurse} | {Patient:Nurse} ,out{Patient:Patient,Nurse} | {Patient: Nurse} 
+	 void addTestEvaluation(Date date, boolean testResult) { // in{Patient:Patient,Nurse} | {Patient:Nurse} ,out{Patient:Patient,Nurse} | {Patient: Nurse}
 		
 		TestEvaluation testEvaluation = new TestEvaluation(date, testResult); //{Patient:Patient,Nurse} | {Patient: Nurse} -> {Patient:Patient,Nurse} | {Patient: Nurse}
 		
@@ -26,7 +26,7 @@ public class Patient { // {Patient: Patient, Nurse} | {Patient: Nurse}
 		
 	}
 	
-	public void addAppointment(Date date, boolean type, String location) { // in{Patient:Patient,Nurse} | {Patient: Patient} ,out{Patient:Patient,Nurse} | {Patient: Patient}
+	 void addAppointment(Date date, boolean type, String location) { // in{Patient:Patient,Nurse} | {Patient: Patient} ,out{Patient:Patient,Nurse} | {Patient: Patient}
 		
 		Appointment appointment = new Appointment(date, location, type); //{Patient:Patient,Nurse} | {Patient:Patient} -> {Patient:Patient,Nurse} | {Patient:Patient}
 		
@@ -35,7 +35,8 @@ public class Patient { // {Patient: Patient, Nurse} | {Patient: Nurse}
 		setAppointments(appointmentsNew);  // {Patient:Patient,Nurse} | {Patient:Patient} -> {Patient:Patient,Nurse} | {Patient:Patient}
 	}
 
-	public int getCpr() {// in{MAYBE DECLASSIFY},out {Patient:Patient} | {Patient: top} TODO declassify? 
+	public int getCpr() {// in{MAYBE DECLASSIFY},out {Patient:Patient} | {Patient: top} TODO declassify?
+		//if_acts_for(Nurse, Patient)
 		return cpr;
 	}
 

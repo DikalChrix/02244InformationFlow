@@ -60,22 +60,23 @@ public class main {
 		System.out.println("1: Login to the system"); // {} | {}
 		System.out.println("2: Print statistical reprot"); // {} | {}
         System.out.println("3: Login as nurse"); // {} | {}
-		String userInput = scanner.nextLine(); // {Patient: Patient, Nurse: Nurse, Public: Public} | {Patient: Patient, Nurse: Nurse, Public: Public} 
+		String publicInput = scanner.nextLine(); // {Public: Public} | {Public: Public}
+		String patientInput;
 
-		switch (Integer.parseInt(userInput)) {
+		switch (Integer.parseInt(publicInput)) {
 		case 1:
 			while (true) {
 				System.out.println("Please input your cpr:");
-				userInput = scanner.nextLine(); // {Patient: Patient} | {Patient: Patient}  -> 	TODO analyse flow
+				patientInput= scanner.nextLine(); // {Public: Public} |{Public: Public}->{Patient: Patient} | {Patient: Patient} 	TODO analyse flow
 					if(true) {
-						return Integer.parseInt(userInput);
+						return Integer.parseInt(patientInput);
 					}
 
 				}
 		case 2:
 			System.out.println("Current Statistics:"); // {} | {}
-			System.out.println("Positive percent last 7 days: "+pctPositive(patientData,7)+"%"); // {Public: Public} | {Public: Public}
-			System.out.println("Number of vaccinations last 7 days: "+numVaccinated(patientData,7)); // {Public: Public} | {Public: Public}
+			System.out.println("Positive percent last 7 days: "+pctPositive(patientData,7)+"%"); // {Bottom: Bottom} | {Bottom: Bottom}
+			System.out.println("Number of vaccinations last 7 days: "+numVaccinated(patientData,7)); // {Bottom: Bottom} | {Bottom: Bottom}
 
 			System.exit(0); // {} | {} 
 			return 0;
@@ -83,11 +84,11 @@ public class main {
         case 3:
             while (true) {
                 System.out.println("Please input nurse login:"); // {} | {}
-                userInput = scanner.nextLine(); // {Nurse: Nurse} | {Nurse: Nurse} -> TODO analyse flow
                 if(true) {
-					loggedInNurse(patientData); // TODO set classification
-                    return Integer.parseInt(userInput);
+					loggedInNurse(patientData); //  {Nurse:Nurse} | {Nurse:Nurse} -> {Nurse:Nurse} | {Nurse:Nurse}
                 }
+				System.exit(0); // {} | {}
+				return 0;
 
             }
 
@@ -127,20 +128,20 @@ public class main {
 
 				input = scanner.nextLine(); // {Patient:Patient} | {Patient:Patient}  -> {Patient:Patient} | {Patient:Patient} 
 
-				switch (Integer.parseInt(input)) { // {Patient:Patient} | {Patient:Patient} -> TODO evaluate implicit flow
+				switch (Integer.parseInt(input)) { // {Patient:Patient} | {Patient:Patient} -> {Patient:Patient} | {Patient:Patient}
 				case 1:
 
 					Date date = new Date(1651838440); // {} | {}
 
 					patient.addAppointment(date, false, "Copenhagen NV"); // {Patient:Patient, Nurse} | {Patient:Patient}  -> {Patient:Patient,Nurse} | {Patient: Patient}
-					System.out.println("Test appointment booked!"); // {Patient: Patient} | {} 
+					System.out.println("Test appointment booked!"); // {Patient: Patient} | {patient: }
 					break;
 				case 2:
 
 					Date date2 = new Date(1652431200); // {} | {}
 
 					patient.addAppointment(date2, false, "Lyngby"); // {Patient:Patient, Nurse} | {Patient:Patient}  -> {Patient:Patient,Nurse} | {Patient: Patient}
-					System.out.println("Test appointment booked!"); // {Patient: Patient} | {} 
+					System.out.println("Test appointment booked!"); // {Patient: Patient} | {patient: }
 					break;
 				case 3:
 
@@ -164,7 +165,7 @@ public class main {
 
 				input = scanner.nextLine(); // {Patient:Patient} | {Patient:Patient}  -> {Patient:Patient} | {Patient:Patient}
 
-				switch (Integer.parseInt(input)) { // {Patient:Patient} | {Patient:Patient}  -> TODO evaluate implicit flow 
+				switch (Integer.parseInt(input)) { // {Patient:Patient} | {Patient:Patient}  -> {Patient:Patient} | {Patient:Patient}
 				case 1:
 
 					Date date = new Date(1651838440); // {} | {}
@@ -195,7 +196,7 @@ public class main {
 				TestEvaluation lstTstEval = patient.getTest(testLen-1); // {Patient:Patient,Nurse} | {Patient: Nurse} -> {Patient:Patient,Nurse} | {Patient: Nurse}
 				if (testLen > 0) { // {Patient:Patient,Nurse} | {Patient: Nurse}
 					System.out.println("Last test result: " + lstTstEval.isTestResult() + "\n"); //{Patient:Patient,Nurse} | {Patient: Nurse}
-				}else{System.out.println("No tests found\n");} //{Patient:Patient,Nurse} | {Patient: A} TODO admin?
+				}else{System.out.println("No tests found\n");} //{Patient:Patient,Nurse}
 
 				break;
 			case 4:
@@ -206,7 +207,7 @@ public class main {
 				logout = true;
 			}
 
-			if(logout) { // {Patient:Patient} | {Patient:Patient} TODO implicit flow
+			if(logout) { // {Patient:Patient} | {Patient:Patient} ->{Patient:Patient} | {Patient:Patient}
 				scanner.close();
 				break;
 			}
@@ -219,11 +220,13 @@ public class main {
         Scanner scanner = new Scanner(System.in); // {Nurse:Nurse} | {Nurse:Nurse}
 		boolean logout = false; // {Nurse:Nurse} | {Nurse:Nurse}
         Patient p = null; // {Nurse: Nurse} | {Nurse: Nurse}
-        System.out.println("Enter cpr of patient");  // {Nurse:Nurse} | {Nurse: A} TODO admin?
+        System.out.println("Enter cpr of patient");  // {Nurse:Nurse}
         String userInput = scanner.nextLine(); // {Nurse:Nurse} | {Nurse:Nurse} -> {Nurse:Nurse} | {Nurse:Nurse}
         for(int i = 0; i<patients.size(); i++) {
-            if (Integer.parseInt(userInput) == patients.get(i).getCpr()) { // TODO implicit flow
-                p = patients.get(i); // {Patient: Patient, Nurse} | {Patient: Nurse} -> {Nurse: Nurse} | {Nurse: Nurse} TODO declassify
+            if (Integer.parseInt(userInput) == patients.get(i).getCpr()) { // {Nurse: Nurse} | {Nurse: Nurse} ==  TODO implicit flow
+            	//if_acts_for(loggedInNurse, Patient)
+                p = patients.get(i); // {Patient: Patient, Nurse} | {Patient: Nurse} -> {Nurse: Nurse} | {Nurse: Nurse}
+				// p = (declassify(patient.get(i),{}))
                 break;
             }
         }
@@ -320,7 +323,7 @@ public class main {
 
 	}
 
-	// Input: {Nurse: Nurse}, {Public:} | {Nurse: Nurse}, {Public: } Output: {} | {}
+	// Input: {Nurse: Nurse}, {Bottom:} | {Nurse: Nurse}, {Bottom: } Output: {} | {}
 	public static int pctPositive(ArrayList<Patient>patientList, int days){
 		Date currentDate = new Date(); // {} | {}
 		LocalDateTime LDTcurrentDate = currentDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime(); // {} | {}
@@ -350,7 +353,7 @@ public class main {
 		return (100*sumPosTests/sumTests);
 	}
 
-	// Input: {Nurse: Nurse}, {Public:} | {Nurse: Nurse}, {Public: } Output: {} | {}
+	// Input: {Nurse: Nurse}, {Bottom:} | {Nurse: Nurse}, {Bottom: } Output: {} | {}
 	public static int numVaccinated(ArrayList<Patient>patientList, int days) {
 		Date currentDate = new Date(); // {} | {}
 		LocalDateTime LDTcurrentDate = currentDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime(); // {} | {}
