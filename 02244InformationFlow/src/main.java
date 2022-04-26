@@ -225,7 +225,7 @@ public class main {
         for(int i = 0; i<patients.size(); i++) {
             if (Integer.parseInt(userInput) == patients.get(i).getCpr()) { // {Nurse: Nurse} | {Nurse: Nurse} ==  TODO implicit flow
             	//if_acts_for(loggedInNurse, Patient)
-                p = patients.get(i); // {Patient: Patient, Nurse} | {Patient: Nurse} -> {Nurse: Nurse} | {Nurse: Nurse}
+                p = patients.get(i); // {Patient: Patient, Nurse} | {Patient: Nurse} -> {Nurse: Nurse} | {Nurse: Nurse} {⊥}
 				// p = (declassify(patient.get(i),{}))
                 break;
             }
@@ -330,8 +330,8 @@ public class main {
 		LocalDateTime prevDate = LDTcurrentDate.minusDays(days); // {} | {}
 
 		int daysBetween = (int) Duration.between(prevDate,LDTcurrentDate).toDays(); // {} | {}
-		int sumPosTests=0; // {} | {}
-		int sumTests=0; // {} | {}
+		int sumPosTests=0; // {} | {} TODO change classification
+		int sumTests=0; // {} | {} TODO change classification
 		for (int i=0; i<patientList.size() ;i++){
 			ArrayList<TestEvaluation> currPatientTests = patientList.get(i).getTests(); // {Patient:Patient,Nurse} | {Patient: Nurse} -> {Patient:Patient,Nurse} | {Patient: Nurse}
 			for(int j=0; j<currPatientTests.size(); j++) {
@@ -350,7 +350,9 @@ public class main {
 		if(sumTests==0){ // {} | {}
 			sumTests = 1;
 		}
+		//if_acts_for(pctPositive, Nurse)
 		return (100*sumPosTests/sumTests);
+		// return = (declassify(100*sumPosTests/sumTests,{}))
 	}
 
 	// Input: {Nurse: Nurse}, {Bottom:} | {Nurse: Nurse}, {Bottom: } Output: {} | {}
@@ -360,7 +362,7 @@ public class main {
 		LocalDateTime prevDate = LDTcurrentDate.minusDays(days); // {} | {}
 
 		int daysBetween = (int) Duration.between(prevDate,LDTcurrentDate).toDays(); // {} | {}
-		int sumVaccs=0; // {} | {}
+		int sumVaccs=0; // {} | {} TODO change classification
 		for (int i=0; i<patientList.size() ;i++){
 			ArrayList<Appointment> patientAppointments = patientList.get(i).getAppointments(); // {Patient:Patient,Nurse} | {Patient: Patient} -> {Patient:Patient,Nurse} | {Patient:Patient} 
 			for(int j=0; j<patientAppointments.size(); j++) {
@@ -374,7 +376,8 @@ public class main {
 				}
 			}
 		}
-
+		//if_acts_for(pctPositive, Nurse)
 		return sumVaccs;
+		// return = (declassify(sumVaccs,{}))
 	}
 }
