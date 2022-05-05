@@ -51,7 +51,7 @@ public class main {
 
 
 
-	// Input: {Nurse:Nurse} | {Nurse:Nurse}, Output: {Patient:Patient} | {Patient:Patient}  TODO declassify somewhere?
+	// Input: N/A , Output: {Patient:Patient} | {Patient:Patient}
 	public static int loginFunction() {
 
 		//Create console object
@@ -69,7 +69,7 @@ public class main {
 		case 1:
 			while (true) {
 				System.out.println("Please input your cpr:");
-				patientInput= scanner.nextLine(); // {Public: Public} |{Public: Public}->{Patient: Patient} | {Patient: Patient} 	TODO analyse flow
+				patientInput= scanner.nextLine();
 					if(true) {
 						return Integer.parseInt(patientInput);
 					}
@@ -225,10 +225,11 @@ public class main {
         System.out.println("Enter cpr of patient");  // {Nurse:Nurse}
         String userInput = scanner.nextLine(); // {Nurse:Nurse} | {Nurse:Nurse} -> {Nurse:Nurse} | {Nurse:Nurse}
         for(int i = 0; i<patientData.size(); i++) {
-            if (Integer.parseInt(userInput) == patientData.get(i).getCpr()) { // {Nurse: Nurse} | {Nurse: Nurse} ==  TODO implicit flow
+            if (Integer.parseInt(userInput) == patientData.get(i).getCpr()) { // {Nurse: Nurse} | {Nurse: Nurse} ==  {}, {}TODO implicit flow
             	//if_acts_for(loggedInNurse, Patient)
-                p = patientData.get(i); // {Patient: Patient, Nurse} | {Patient: Nurse} -> {Nurse: Nurse} | {Nurse: Nurse} {⊥}
-				// p = (declassify(patientData.get(i),{}))
+                // p = (declassify(patientData.get(i),{}))
+                p = patientData.get(i); // {} | {} -> {Nurse: Nurse} | {Nurse: Nurse} {⊥}
+
                 break;
             }
         }
@@ -280,7 +281,7 @@ public class main {
                 break;
                 
             case 2:
-                p.setVaccinated(true); // TODO change owners? 
+                p.setVaccinated(true); // {Nurse: Nurse}
                 for(int i = 0; i<pAppointment.size(); i++){
                 	if(pAppointment.get(i).getType()){ // {Patient:Patient,Nurse} | {Patient:Patient} TODO implicit flow
                 		p.setVaccinationDate((pAppointment.get(i).getAppointmentDate())); // {Patient:Patient} | {Patient: top,Nurse} -> {Patient:Patient,Nurse} | {Patient: Nurse}
@@ -305,10 +306,11 @@ public class main {
                 System.out.println("Enter cpr of patient"); // {Nurse: Nurse} | {top}
                 userInput = scanner.nextLine(); // {Nurse:Nurse} | {Nurse:Nurse} -> {Nurse:Nurse} | {Nurse:Nurse}
                 for(int i = 0; i<patientData.size(); i++) {
-                    if (Integer.parseInt(userInput) == patientData.get(i).getCpr()) { // {Nurse:Nurse} | {Nurse:Nurse} == {Patient:Patient} | {top}  TODO implicit flow
+                    if (Integer.parseInt(userInput) == patientData.get(i).getCpr()) { // {Nurse:Nurse} | {Nurse:Nurse} == {} | {}  TODO implicit flow
 						//if_acts_for(loggedInNurse, Patient)
-                        p = patientData.get(i); // {Patient: Patient, Nurse} | {Patient: Nurse} -> {Nurse: Nurse} | {Nurse: Nurse}
-						// p = (declassify(patientData.get(i),{}))
+                        // p = (declassify(patientData.get(i),{}))
+                        p = patientData.get(i); // {} | {} -> {Nurse: Nurse} | {Nurse: Nurse}
+
                         break;
                     }
 
@@ -329,25 +331,27 @@ public class main {
 
 	// Input: {Bottom:} | {Nurse: Nurse}, {Bottom: } Output: {} | {}
 	public static int pctPositive(int days){
-		Date currentDate = new Date(); // {Nurse: Nurse} | {}
-		LocalDateTime LDTcurrentDate = currentDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime(); // {} | {}
-		LocalDateTime prevDate = LDTcurrentDate.minusDays(days); // {} | {}
+		Date currentDate = new Date(); // {Nurse: Nurse} | {{Nurse: Nurse}}
+		LocalDateTime LDTcurrentDate = currentDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime(); // {Nurse: Nurse} | {Nurse: Nurse}
+		LocalDateTime prevDate = LDTcurrentDate.minusDays(days); // {Nurse: Nurse} | {Nurse: Nurse}
 
-		int daysBetween = (int) Duration.between(prevDate,LDTcurrentDate).toDays(); // {} | {}
-		int sumPosTests=0; // {} | {} TODO change classification
-		int sumTests=0; // {} | {} TODO change classification
+		int daysBetween = (int) Duration.between(prevDate,LDTcurrentDate).toDays(); // {Nurse: Nurse} | {Nurse: Nurse}
+		int sumPosTests=0; // {Nurse: Nurse} | {Nurse: Nurse}
+		int sumTests=0; // {Nurse: Nurse} | {Nurse: Nurse}
 		for (int i=0; i<patientData.size() ;i++){
+            //if_acts_for(pctPositive, Patient)
+            // ArrayList<TestEvaluation> currPatientTests = (declassify(patientData.get(i).getTests(),{}))
 			ArrayList<TestEvaluation> currPatientTests = patientData.get(i).getTests(); // {Patient:Patient,Nurse} | {Patient: Nurse} -> {Patient:Patient,Nurse} | {Patient: Nurse}
 			for(int j=0; j<currPatientTests.size(); j++) {
-				Date testDate = currPatientTests.get(j).getTestDate(); // {Patient:Patient,Nurse} | {Patient: Nurse} -> {} | {} TODO declassify
-				LocalDateTime LDTTestDate = testDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime(); // {} | {} -> {} | {} 
-				if (testDate.before(currentDate) && (int) Duration.between(LDTTestDate,LDTcurrentDate).toDays() < daysBetween) { // {} | {} && {} | {} < {} | {}  TODO implicit flow
-                    //if_acts_for(???,nurse/patient) then TODO how does declassification work
-                    //sumTests:=declassify(sumTests,{Patient:????})
-				    sumTests ++;
-					if (currPatientTests.get(j).isTestResult()) { // {Patient:Patient,Nurse} | {Patient: Nurse}
-						sumPosTests ++;
-					}
+
+				Date testDate = currPatientTests.get(j).getTestDate(); // {Patient:Patient,Nurse} | {Patient: Nurse} -> {Nurse: Nurse} | {Nurse: Nurse}
+
+				LocalDateTime LDTTestDate = testDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime(); // {Nurse: Nurse} | {Nurse: Nurse}  -> {Nurse: Nurse} | {Nurse: Nurse}
+				if (testDate.before(currentDate) && (int) Duration.between(LDTTestDate,LDTcurrentDate).toDays() < daysBetween) { // {Nurse: Nurse} | {Nurse: Nurse}  && {Nurse: Nurse} | {Nurse: Nurse}  < {Nurse: Nurse} | {Nurse: Nurse}
+				    sumTests ++; // {Nurse: Nurse}
+					if (currPatientTests.get(j).isTestResult()) { // {Nurse: Nurse} | {Nurse: Nurse}  | {Nurse: Nurse} | {Nurse: Nurse}
+						sumPosTests ++; //{Nurse: Nurse} | {Nurse: Nurse}
+                    }
 				}
 			}
 		}
@@ -355,33 +359,35 @@ public class main {
 			sumTests = 1;
 		}
 		//if_acts_for(pctPositive, Nurse)
+        // return = (declassify(100*sumPosTests/sumTests,{}))
 		return (100*sumPosTests/sumTests);
-		// return = (declassify(100*sumPosTests/sumTests,{}))
+
 	}
 
 	// Input: {Bottom:} | {Nurse: Nurse}, {Bottom: } Output: {} | {}
 	public static int numVaccinated(int days) {
-		Date currentDate = new Date(); // {} | {}
-		LocalDateTime LDTcurrentDate = currentDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime(); // {} | {}
-		LocalDateTime prevDate = LDTcurrentDate.minusDays(days); // {} | {}
+		Date currentDate = new Date(); //  {Nurse: Nurse}
+		LocalDateTime LDTcurrentDate = currentDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime(); //  {Nurse: Nurse}
+		LocalDateTime prevDate = LDTcurrentDate.minusDays(days); //  {Nurse: Nurse}
 
-		int daysBetween = (int) Duration.between(prevDate,LDTcurrentDate).toDays(); // {} | {}
-		int sumVaccs=0; // {} | {} TODO change classification
+		int daysBetween = (int) Duration.between(prevDate,LDTcurrentDate).toDays(); //  {Nurse: Nurse}
+		int sumVaccs=0; //  {Nurse: Nurse}
 		for (int i=0; i<patientData.size() ;i++){
-			ArrayList<Appointment> patientAppointments = patientData.get(i).getAppointments(); // {Patient:Patient,Nurse} | {Patient: Patient} -> {Patient:Patient,Nurse} | {Patient:Patient}
+            //if_acts_for(numVaccinated, Patient)
+            // ArrayList<Appointment> patientAppointments = (declassify(patientData.get(i).getAppointments(),{}))
+			ArrayList<Appointment> patientAppointments = patientData.get(i).getAppointments(); // {} | {} -> {Nurse: Nurse} | {Nurse: Nurse}
 			for(int j=0; j<patientAppointments.size(); j++) {
-				Appointment currAppointment = patientAppointments.get(j); // {Patient:Patient,Nurse} | {Patient:Patient} -> {Patient:Patient,Nurse} | {Patient:Patient} // TODO Placeholder ?
-				Date vaccDate = currAppointment.getAppointmentDate(); // //{Patient:Patient,Nurse} | {Patient:Patient ->  {} | {} TODO declassify, placeholder?
-				LocalDateTime LDTTestDate = vaccDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime(); // {} | {} -> {} | {}
-				if (vaccDate.before(currentDate) && (int) Duration.between(LDTTestDate,LDTcurrentDate).toDays() < daysBetween && currAppointment.getType()==true) { // {} | {} && {} | {} < {} | {} && {Patient:Patient,Nurse} | {Patient:Patient} TODO implicit flow 
-                    //if_acts_for(???,nurse/patient) then
-                    //sumVaccs:=declassify(sumVaccs,{Patient:????})
-					sumVaccs ++;
+				Appointment currAppointment = patientAppointments.get(j); // {Nurse: Nurse} | {Nurse: Nurse} -> {Nurse: Nurse} | {Nurse: Nurse} /
+				Date vaccDate = currAppointment.getAppointmentDate(); // {Nurse: Nurse} | {Nurse: Nurse} ->  {Nurse: Nurse} | {Nurse: Nurse}
+				LocalDateTime LDTTestDate = vaccDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime(); // {Nurse: Nurse} | {Nurse: Nurse} -> {Nurse: Nurse} | {Nurse: Nurse}
+				if (vaccDate.before(currentDate) && (int) Duration.between(LDTTestDate,LDTcurrentDate).toDays() < daysBetween && currAppointment.getType()==true) { // {Nurse: Nurse} | {Nurse: Nurse} && {Nurse: Nurse} | {Nurse: Nurse} < {Nurse: Nurse} | {Nurse: Nurse} && {Nurse: Nurse} | {Nurse: Nurse}
+					sumVaccs ++; // {Nurse: Nurse}
 				}
 			}
 		}
 		//if_acts_for(pctPositive, Nurse)
+        // return = (declassify(sumVaccs,{}))
 		return sumVaccs;
-		// return = (declassify(sumVaccs,{}))
+
 	}
 }

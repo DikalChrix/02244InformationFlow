@@ -9,7 +9,7 @@ import java.util.Date;
 	private ArrayList<Appointment> appointments = new ArrayList<Appointment>(); //{Patient:Patient,Nurse} | {Patient: Patient}
 	
 	
-	 Patient(int cprInit, boolean vaccinatedInit, Date vaccinationDateInit) { //in{Patient:Patient} | {Patient: top} ,out{Patient:Patient,Nurse} | {Patient: Nurse}  TODO check Admin
+	 Patient(int cprInit, boolean vaccinatedInit, Date vaccinationDateInit) { // used to set "database" up
 		setCpr(cprInit);
 		setVaccinated(vaccinatedInit);
 		setVaccinationDate(vaccinationDateInit);
@@ -35,7 +35,7 @@ import java.util.Date;
 		setAppointments(appointmentsNew);  // {Patient:Patient,Nurse} | {Patient:Patient} -> {Patient:Patient,Nurse} | {Patient:Patient}
 	}
 
-	public int getCpr() {// in{MAYBE DECLASSIFY},out {Patient:Patient} | {Patient: top} TODO declassify?
+	public int getCpr() {// in{Nurse: Nurse},out {Patient:Patient} | {Patient: top}
 		//if_acts_for(getCpr, Patient)
 		// cpr = (declassify(cpr,{}))
 		return cpr;
