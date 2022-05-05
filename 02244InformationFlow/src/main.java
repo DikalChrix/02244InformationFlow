@@ -25,13 +25,9 @@ public class main {
 
 
 		//Add patients to "database"
-
 		patientData.add(Ahmed); //Patient -> Nurse {Patient:Nurse,Nurse:Nurse} | {Patient:Nurse,Nurse:Nurse}
 		patientData.add(Brian); //Patient -> Nurse {Patient:Nurse,Nurse:Nurse} | {Patient:Nurse,Nurse:Nurse}
 		patientData.add(Charlotte); //Patient -> Nurse {Patient:Nurse,Nurse:Nurse} | {Patient:Nurse,Nurse:Nurse}
-
-
-
 
 		//Functionalities:
 		int userCpr = loginFunction(); // {Patient:Patient} | {Patient:Patient}
@@ -119,8 +115,8 @@ public class main {
 
 			String input = scanner.nextLine(); // {Patient:Patient} | {Patient:Patient}
 
-			switch (Integer.parseInt(input)) { // {Patient:Patient} | {Patient:Patient} -> TODO evaluate implicit flow
-			case 1:
+			switch (Integer.parseInt(input)) { // {Patient:Patient} | {Patient:Patient} -> TODO evaluate implicit flow, Integrity Problem: Nurse can't flow into Patient
+			case 1:  // {Patient:Patient} | {Patient:Patient}
 				// Book test appointment
 
 				System.out.println("Possible locations and dates for testing: "); // {} | {}
@@ -131,33 +127,33 @@ public class main {
 				input = scanner.nextLine(); // {Patient:Patient} | {Patient:Patient}  -> {Patient:Patient} | {Patient:Patient} 
 
 				switch (Integer.parseInt(input)) { // {Patient:Patient} | {Patient:Patient} -> {Patient:Patient} | {Patient:Patient}
-				case 1:
+				case 1:  // {Patient:Patient, Nurse} | {Patient:Patient}
 
 					Date date = new Date(1651838440); // {} | {}
 
 					patient.addAppointment(date, false, "Copenhagen NV"); // {Patient:Patient, Nurse} | {Patient:Patient}  -> {Patient:Patient,Nurse} | {Patient: Patient}
-					System.out.println("Test appointment booked!"); // {Patient: Patient} | {patient: }
+					System.out.println("Test appointment booked!"); // {} | {}
 					break;
-				case 2:
+				case 2: // {Patient:Patient, Nurse} | {Patient:Patient}
 
 					Date date2 = new Date(1652431200); // {} | {}
 
 					patient.addAppointment(date2, false, "Lyngby"); // {Patient:Patient, Nurse} | {Patient:Patient}  -> {Patient:Patient,Nurse} | {Patient: Patient}
-					System.out.println("Test appointment booked!"); // {Patient: Patient} | {patient: }
+					System.out.println("Test appointment booked!"); // {} | {}
 					break;
-				case 3:
+				case 3: // {Patient:Patient, Nurse} | {Patient:Patient}
 
 					Date date3 = new Date(1652631900); // {} | {}
 
 					patient.addAppointment(date3, false, "Holte"); // {Patient:Patient, Nurse} | {Patient:Patient}  -> {Patient:Patient,Nurse} | {Patient: Patient}
-					System.out.println("Test appointment booked!"); // {Patient: Patient} | {} 
+					System.out.println("Test appointment booked!"); // {} | {}
 					break;
 				default:
 					break;
 				}
 
 				break;
-			case 2:
+			case 2: // {Patient:Patient} | {Patient:Patient}
 				// Book vaccination appointment
 
 				System.out.println("Possible locations and dates for vaccination: "); // {} | {}
@@ -168,40 +164,40 @@ public class main {
 				input = scanner.nextLine(); // {Patient:Patient} | {Patient:Patient}  -> {Patient:Patient} | {Patient:Patient}
 
 				switch (Integer.parseInt(input)) { // {Patient:Patient} | {Patient:Patient}  -> {Patient:Patient} | {Patient:Patient}
-				case 1:
+				case 1: // {Patient:Patient, Nurse} | {Patient:Patient}
 
 					Date date = new Date(1651838440); // {} | {}
 
 					patient.addAppointment(date, true, "Copenhagen NV"); // {Patient:Patient, Nurse} | {Patient:Patient}  -> {Patient:Patient,Nurse} | {Patient: Patient}
-					System.out.println("Vaccination appointment booked!"); // {Patient: Patient} | {top}
-					break;
-				case 2:
+					System.out.println("Vaccination appointment booked!"); // {} | {}
+
+				case 2: // {Patient:Patient, Nurse} | {Patient:Patient}
 
 					Date date2 = new Date(1652431200); // {} | {}
 
 					patient.addAppointment(date2, true, "Lyngby"); // {Patient:Patient, Nurse} | {Patient:Patient}  -> {Patient:Patient,Nurse} | {Patient: Patient}
-					System.out.println("Vaccination appointment booked!"); // {Patient: Patient} | {top}
+					System.out.println("Vaccination appointment booked!"); // {} | {}
 					break;
-				case 3:
+				case 3: // {Patient:Patient, Nurse} | {Patient:Patient}
 
 					Date date3 = new Date(1652631900); // {} | {}
 
 					patient.addAppointment(date3, true, "Holte"); // {Patient:Patient, Nurse} | {Patient:Patient}  -> {Patient:Patient,Nurse} | {Patient: Patient}
-					System.out.println("Vaccination appointment booked!"); // {Patient: Patient} | {top} 
+					System.out.println("Vaccination appointment booked!"); // {} | {}
 					break; 
 				default:
 					break;
 				}
 				break;
-			case 3:
+			case 3: //{Patient:Patient,Nurse} | {Patient: Nurse}
 				int testLen = patient.getTests().size(); // {Patient:Patient,Nurse} | {Patient: Nurse} -> {Patient:Patient,Nurse} | {Patient: Nurse}
 				TestEvaluation lstTstEval = patient.getTest(testLen-1); // {Patient:Patient,Nurse} | {Patient: Nurse} -> {Patient:Patient,Nurse} | {Patient: Nurse}
 				if (testLen > 0) { // {Patient:Patient,Nurse} | {Patient: Nurse}
 					System.out.println("Last test result: " + lstTstEval.isTestResult() + "\n"); //{Patient:Patient,Nurse} | {Patient: Nurse}
-				}else{System.out.println("No tests found\n");} //{Patient:Patient,Nurse}
+				}else{System.out.println("No tests found\n");} // {} | {}
 
 				break;
-			case 4:
+			case 4: // {Patient:Patient,Nurse} | {Patient: Nurse}
 				System.out.println("Vaccination status: "+patient.isVaccinated()+"\n"); // {Patient:Patient,Nurse} | {Patient: Nurse}
 				break;
 			default:
