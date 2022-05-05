@@ -5,7 +5,9 @@ import java.util.Date;
 import java.util.Scanner;
 import java.time.*;
 
+
 public class main {
+	static ArrayList<Patient> patientData = new ArrayList<Patient>(); //Nurse {Nurse:Nurse} | {Nurse:Nurse}
 	public static void main(String[] args) {
 
 		//Publicate the database
@@ -23,7 +25,7 @@ public class main {
 
 
 		//Add patients to "database"
-		ArrayList<Patient> patientData = new ArrayList<Patient>(); //Nurse {Nurse:Nurse} | {Nurse:Nurse}
+
 		patientData.add(Ahmed); //Patient -> Nurse {Patient:Nurse,Nurse:Nurse} | {Patient:Nurse,Nurse:Nurse}
 		patientData.add(Brian); //Patient -> Nurse {Patient:Nurse,Nurse:Nurse} | {Patient:Nurse,Nurse:Nurse}
 		patientData.add(Charlotte); //Patient -> Nurse {Patient:Nurse,Nurse:Nurse} | {Patient:Nurse,Nurse:Nurse}
@@ -32,7 +34,7 @@ public class main {
 
 
 		//Functionalities:
-		int userCpr = loginFunction(patientData); // {Patient:Patient} | {Patient:Patient}
+		int userCpr = loginFunction(); // {Patient:Patient} | {Patient:Patient}
 
 
 		// Find
@@ -50,7 +52,7 @@ public class main {
 
 
 	// Input: {Nurse:Nurse} | {Nurse:Nurse}, Output: {Patient:Patient} | {Patient:Patient}  TODO declassify somewhere?
-	public static int loginFunction(ArrayList<Patient> patientData) {
+	public static int loginFunction() {
 
 		//Create console object
 		Scanner scanner = new Scanner(System.in);
@@ -75,8 +77,8 @@ public class main {
 				}
 		case 2:
 			System.out.println("Current Statistics:"); // {} | {}
-			System.out.println("Positive percent last 7 days: "+pctPositive(patientData,7)+"%"); // {Bottom: Bottom} | {Bottom: Bottom}
-			System.out.println("Number of vaccinations last 7 days: "+numVaccinated(patientData,7)); // {Bottom: Bottom} | {Bottom: Bottom}
+			System.out.println("Positive percent last 7 days: "+pctPositive(7)+"%"); // {Bottom: Bottom} | {Bottom: Bottom}
+			System.out.println("Number of vaccinations last 7 days: "+numVaccinated(7)); // {Bottom: Bottom} | {Bottom: Bottom}
 
 			System.exit(0); // {} | {} 
 			return 0;
@@ -85,7 +87,7 @@ public class main {
             while (true) {
                 System.out.println("Please input nurse login:"); // {} | {}
                 if(true) {
-					loggedInNurse(patientData); //  {Nurse:Nurse} | {Nurse:Nurse} -> {Nurse:Nurse} | {Nurse:Nurse}
+					loggedInNurse(); //  {Nurse:Nurse} | {Nurse:Nurse} -> {Nurse:Nurse} | {Nurse:Nurse}
                 }
 				System.exit(0); // {} | {}
 				return 0;
@@ -215,18 +217,18 @@ public class main {
 		}
 	}
 
-	// Input: {Nurse:Nurse} | {Nurse:Nurse}, Output: N/A
-	public static void loggedInNurse(ArrayList<Patient> patients) {
+	// Input: N/A, Output: N/A
+	public static void loggedInNurse() {
         Scanner scanner = new Scanner(System.in); // {Nurse:Nurse} | {Nurse:Nurse}
 		boolean logout = false; // {Nurse:Nurse} | {Nurse:Nurse}
         Patient p = null; // {Nurse: Nurse} | {Nurse: Nurse}
         System.out.println("Enter cpr of patient");  // {Nurse:Nurse}
         String userInput = scanner.nextLine(); // {Nurse:Nurse} | {Nurse:Nurse} -> {Nurse:Nurse} | {Nurse:Nurse}
-        for(int i = 0; i<patients.size(); i++) {
-            if (Integer.parseInt(userInput) == patients.get(i).getCpr()) { // {Nurse: Nurse} | {Nurse: Nurse} ==  TODO implicit flow
+        for(int i = 0; i<patientData.size(); i++) {
+            if (Integer.parseInt(userInput) == patientData.get(i).getCpr()) { // {Nurse: Nurse} | {Nurse: Nurse} ==  TODO implicit flow
             	//if_acts_for(loggedInNurse, Patient)
-                p = patients.get(i); // {Patient: Patient, Nurse} | {Patient: Nurse} -> {Nurse: Nurse} | {Nurse: Nurse} {⊥}
-				// p = (declassify(patient.get(i),{}))
+                p = patientData.get(i); // {Patient: Patient, Nurse} | {Patient: Nurse} -> {Nurse: Nurse} | {Nurse: Nurse} {⊥}
+				// p = (declassify(patientData.get(i),{}))
                 break;
             }
         }
@@ -290,7 +292,7 @@ public class main {
             case 3:
 
                 ArrayList<TestEvaluation> pTests=p.getTests(); // {Patient:Patient,Nurse} | {Patient: Nurse} -> {Patient:Patient,Nurse} | {Patient: Nurse}
-                System.out.println("Test data from patient: "+p.getCpr()); // {Nurse: Nurse} | {top} TODO declassify
+                System.out.println("Test data from patient: "+p.getCpr()); // {Nurse: Nurse} | {top}
                 for(int j = 0; j<pTests.size();j++) {
                     System.out.println("Test date: "+pTests.get(j).getTestDate()+"\n\rTest result: "+pTests.get(j).isTestResult()+"\n\r"); //	{Patient:Patient,Nurse} | {Patient: Nurse} ->  {Nurse: Nurse} | {top} TODO explicit flow
                 }
@@ -302,9 +304,11 @@ public class main {
             case 5:
                 System.out.println("Enter cpr of patient"); // {Nurse: Nurse} | {top}
                 userInput = scanner.nextLine(); // {Nurse:Nurse} | {Nurse:Nurse} -> {Nurse:Nurse} | {Nurse:Nurse}
-                for(int i = 0; i<patients.size(); i++) {
-                    if (Integer.parseInt(userInput) == patients.get(i).getCpr()) { // {Nurse:Nurse} | {Nurse:Nurse} == {Patient:Patient} | {top}  TODO implicit flow
-                        p = patients.get(i); // {Patient: Patient, Nurse} | {Patient: Nurse} -> {Nurse: Nurse} | {Nurse: Nurse} TODO declassify
+                for(int i = 0; i<patientData.size(); i++) {
+                    if (Integer.parseInt(userInput) == patientData.get(i).getCpr()) { // {Nurse:Nurse} | {Nurse:Nurse} == {Patient:Patient} | {top}  TODO implicit flow
+						//if_acts_for(loggedInNurse, Patient)
+                        p = patientData.get(i); // {Patient: Patient, Nurse} | {Patient: Nurse} -> {Nurse: Nurse} | {Nurse: Nurse}
+						// p = (declassify(patientData.get(i),{}))
                         break;
                     }
 
@@ -323,17 +327,17 @@ public class main {
 
 	}
 
-	// Input: {Nurse: Nurse}, {Bottom:} | {Nurse: Nurse}, {Bottom: } Output: {} | {}
-	public static int pctPositive(ArrayList<Patient>patientList, int days){
-		Date currentDate = new Date(); // {} | {}
+	// Input: {Bottom:} | {Nurse: Nurse}, {Bottom: } Output: {} | {}
+	public static int pctPositive(int days){
+		Date currentDate = new Date(); // {Nurse: Nurse} | {}
 		LocalDateTime LDTcurrentDate = currentDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime(); // {} | {}
 		LocalDateTime prevDate = LDTcurrentDate.minusDays(days); // {} | {}
 
 		int daysBetween = (int) Duration.between(prevDate,LDTcurrentDate).toDays(); // {} | {}
 		int sumPosTests=0; // {} | {} TODO change classification
 		int sumTests=0; // {} | {} TODO change classification
-		for (int i=0; i<patientList.size() ;i++){
-			ArrayList<TestEvaluation> currPatientTests = patientList.get(i).getTests(); // {Patient:Patient,Nurse} | {Patient: Nurse} -> {Patient:Patient,Nurse} | {Patient: Nurse}
+		for (int i=0; i<patientData.size() ;i++){
+			ArrayList<TestEvaluation> currPatientTests = patientData.get(i).getTests(); // {Patient:Patient,Nurse} | {Patient: Nurse} -> {Patient:Patient,Nurse} | {Patient: Nurse}
 			for(int j=0; j<currPatientTests.size(); j++) {
 				Date testDate = currPatientTests.get(j).getTestDate(); // {Patient:Patient,Nurse} | {Patient: Nurse} -> {} | {} TODO declassify
 				LocalDateTime LDTTestDate = testDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime(); // {} | {} -> {} | {} 
@@ -355,16 +359,16 @@ public class main {
 		// return = (declassify(100*sumPosTests/sumTests,{}))
 	}
 
-	// Input: {Nurse: Nurse}, {Bottom:} | {Nurse: Nurse}, {Bottom: } Output: {} | {}
-	public static int numVaccinated(ArrayList<Patient>patientList, int days) {
+	// Input: {Bottom:} | {Nurse: Nurse}, {Bottom: } Output: {} | {}
+	public static int numVaccinated(int days) {
 		Date currentDate = new Date(); // {} | {}
 		LocalDateTime LDTcurrentDate = currentDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime(); // {} | {}
 		LocalDateTime prevDate = LDTcurrentDate.minusDays(days); // {} | {}
 
 		int daysBetween = (int) Duration.between(prevDate,LDTcurrentDate).toDays(); // {} | {}
 		int sumVaccs=0; // {} | {} TODO change classification
-		for (int i=0; i<patientList.size() ;i++){
-			ArrayList<Appointment> patientAppointments = patientList.get(i).getAppointments(); // {Patient:Patient,Nurse} | {Patient: Patient} -> {Patient:Patient,Nurse} | {Patient:Patient} 
+		for (int i=0; i<patientData.size() ;i++){
+			ArrayList<Appointment> patientAppointments = patientData.get(i).getAppointments(); // {Patient:Patient,Nurse} | {Patient: Patient} -> {Patient:Patient,Nurse} | {Patient:Patient}
 			for(int j=0; j<patientAppointments.size(); j++) {
 				Appointment currAppointment = patientAppointments.get(j); // {Patient:Patient,Nurse} | {Patient:Patient} -> {Patient:Patient,Nurse} | {Patient:Patient} // TODO Placeholder ?
 				Date vaccDate = currAppointment.getAppointmentDate(); // //{Patient:Patient,Nurse} | {Patient:Patient ->  {} | {} TODO declassify, placeholder?

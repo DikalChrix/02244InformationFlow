@@ -36,7 +36,8 @@ import java.util.Date;
 	}
 
 	public int getCpr() {// in{MAYBE DECLASSIFY},out {Patient:Patient} | {Patient: top} TODO declassify?
-		//if_acts_for(Nurse, Patient)
+		//if_acts_for(getCpr, Patient)
+		// cpr = (declassify(cpr,{}))
 		return cpr;
 	}
 
