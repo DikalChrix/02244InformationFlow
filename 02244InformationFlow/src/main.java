@@ -34,8 +34,8 @@ public class main {
 
 
 		// Find
-		for (int i = 0; i < patientData.size(); i++) {
-			if (patientData.get(i).getCpr() == userCpr) { // {Patient:Patient,Nurse} | {Patient:} == {Patient:Patient,Nurse} | {Patient:} -> 
+		for (int i = 0; i < patientData.size(); i++) {					
+			if (patientData.get(i).getCpr() == userCpr) { // {Bottom} | {Bottom} == {Patient:Patient,Nurse} | {Patient:} -> {Patient:Patient,Nurse} | {Patient:}
 				loggedInPatient(patientData.get(i)); // {Patient:Patient,Nurse} | {Patient:}
 
 				//Test if appointment is logged
