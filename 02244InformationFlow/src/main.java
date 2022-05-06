@@ -30,13 +30,13 @@ public class main {
 		patientData.add(Charlotte); //Patient -> Nurse {Patient:Nurse,Nurse:Nurse} | {Patient:Nurse,Nurse:Nurse}
 
 		//Functionalities:
-		int userCpr = loginFunction(); // {Patient:Patient} | {Patient:Patient}
+		int userCpr = loginFunction(); // {Bottom} | {Bottom} -> {Patient:Patient,Nurse} | {Patient:}
 
 
 		// Find
 		for (int i = 0; i < patientData.size(); i++) {
-			if (patientData.get(i).getCpr() == userCpr) { // {Patient:Patient}
-				loggedInPatient(patientData.get(i));
+			if (patientData.get(i).getCpr() == userCpr) { // {Patient:Patient,Nurse} | {Patient:} == {Patient:Patient,Nurse} | {Patient:} -> 
+				loggedInPatient(patientData.get(i)); // {Patient:Patient,Nurse} | {Patient:}
 
 				//Test if appointment is logged
 				//System.out.println(patientData.get(i).getAppointments().get(0).getLocation());
@@ -58,20 +58,20 @@ public class main {
 		System.out.println("1: Login to the system"); // {} | {}
 		System.out.println("2: Print statistical reprot"); // {} | {}
         System.out.println("3: Login as nurse"); // {} | {}
-		String publicInput = scanner.nextLine(); // {Public: Public} | {Public: Public}
-		String patientInput;
+		String publicInput = scanner.nextLine(); // {Bottom: Bottom} | {Bottom: Bottom}
+		String patientInput; // {Patient: Patient} | {Patient: Patient} 
 
-		switch (Integer.parseInt(publicInput)) {
-		case 1:
+		switch (Integer.parseInt(publicInput)) { // {Bottom: Bottom} | {Bottom: Bottom}
+		case 1: // {Patient: Patient} | {Patient: Patient}
 			while (true) {
 				System.out.println("Please input your cpr:");
-				patientInput= scanner.nextLine();
+				patientInput= scanner.nextLine(); // {Patient: Patient} | {Patient: Patient}
 					if(true) {
 						return Integer.parseInt(patientInput);
 					}
 
 				}
-		case 2:
+		case 2: // {Bottom: Bottom} | {Bottom: Bottom}
 			System.out.println("Current Statistics:"); // {} | {}
 			System.out.println("Positive percent last 7 days: "+pctPositive(7)+"%"); // {Bottom: Bottom} | {Bottom: Bottom}
 			System.out.println("Number of vaccinations last 7 days: "+numVaccinated(7)); // {Bottom: Bottom} | {Bottom: Bottom}
@@ -79,7 +79,7 @@ public class main {
 			System.exit(0); // {} | {} 
 			return 0;
 
-        case 3:
+        case 3: //  {Nurse:Nurse} | {Nurse:Nurse}
             while (true) {
                 System.out.println("Please input nurse login:"); // {} | {}
                 if(true) {
