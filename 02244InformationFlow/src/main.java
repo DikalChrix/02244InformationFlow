@@ -47,27 +47,26 @@ public class main {
 
 
 
-	// Input: N/A , Output: {Patient:Patient} | {Patient:Patient}
+	// Input: N/A , Output: // {Bottom} | {Bottom}
 	public static int loginFunction() {
 
 		//Create console object
-		Scanner scanner = new Scanner(System.in);
+		Scanner scanner = new Scanner(System.in); // {} | {}
 
 		// Intial message
 		System.out.println("Welcome. Do you want to login or print a staitical report?"); // {} | {}
 		System.out.println("1: Login to the system"); // {} | {}
 		System.out.println("2: Print statistical reprot"); // {} | {}
         System.out.println("3: Login as nurse"); // {} | {}
-		String publicInput = scanner.nextLine(); // {Bottom: Bottom} | {Bottom: Bottom}
-		String patientInput; // {Patient: Patient} | {Patient: Patient} 
+		String publicInput = scanner.nextLine(); // {Bottom} | {Bottom}
 
-		switch (Integer.parseInt(publicInput)) { // {Bottom: Bottom} | {Bottom: Bottom}
+		switch (Integer.parseInt(publicInput)) { // {Bottom} | {Bottom}
 		case 1: // {Patient: Patient} | {Patient: Patient}
-			while (true) {
-				System.out.println("Please input your cpr:");
-				patientInput= scanner.nextLine(); // {Patient: Patient} | {Patient: Patient}
-					if(true) {
-						return Integer.parseInt(patientInput);
+			while (true) { // {Patient: Patient} | {Patient: Patient}
+				System.out.println("Please input your cpr:"); // {} | {}
+				String patientInput = scanner.nextLine(); // {Patient: Patient} | {Patient: Patient}
+					if(true) { // {Patient: Patient} | {Patient: Patient}
+						return Integer.parseInt(patientInput); // {Patient: Patient} | {Patient: Patient}
 					}
 
 				}
@@ -77,32 +76,33 @@ public class main {
 			System.out.println("Number of vaccinations last 7 days: "+numVaccinated(7)); // {Bottom: Bottom} | {Bottom: Bottom}
 
 			System.exit(0); // {} | {} 
-			return 0;
+			return 0; // {Patient: Patient} | {Patient: Patient}
 
-        case 3: //  {Nurse:Nurse} | {Nurse:Nurse}
-            while (true) {
+        case 3: // {Nurse: Nurse} | {Nurse: Nurse}
+            while (true) { // {Nurse: Nurse} | {Nurse: Nurse}
                 System.out.println("Please input nurse login:"); // {} | {}
-                if(true) {
-					loggedInNurse(); //  {Nurse:Nurse} | {Nurse:Nurse} -> {Nurse:Nurse} | {Nurse:Nurse}
+                if(true) { // {Nurse: Nurse} | {Nurse: Nurse}
+					loggedInNurse(); // {Nurse:Nurse} | {Nurse:Nurse}
                 }
 				System.exit(0); // {} | {}
-				return 0;
+				return 0; // {Patient: Patient} | {Patient: Patient}
 
             }
 
-        default:
+        default: // {Patient: Patient} | {Patient: Patient}
 			System.exit(0); // {} | {}
-			return 0;
+			return 0; // {Patient: Patient} | {Patient: Patient}
 		}
 
 	}
 
+	// Input: {Patient:Patient,Nurse} | {Patient:}, BODY: {Patient:Patient,Nurse} | {Patient:}
 	// Input: // {Patient:Patient,Nurse} | {Patient:} , Output: N/A
 	public static void loggedInPatient(Patient patient) {
 
-		boolean logout = false; // {Patient:Patient} | {Patient:}
+		boolean logout = false; // {Patient:Patient, Nurse} | {Patient: }
 
-		Scanner scanner = new Scanner(System.in);
+		Scanner scanner = new Scanner(System.in); // {} | {}
 
 		while(true) { // {Patient:Patient, Nurse} | {Patient: }
 
@@ -113,13 +113,9 @@ public class main {
 			System.out.println("4 to see vaccination results"); // {} | {}
 			System.out.println("5 to logout"); // {} | {}
 
-			String input = scanner.nextLine(); // {Patient:Patient} | {Patient:Patient}
-			
-			//if_acts_for(loggedInPatient, Patient) [Integrity]
-        	// input = (declassify(scanner.nextLine(),{}))
-			
-			
-			switch (Integer.parseInt(input)) { // {Patient:Patient, Nurse} | {Patient: } -> // {Patient:Patient} | {Patient: }
+			String input = scanner.nextLine(); // {Patient:Patient, Nurse} | {Patient:Patient}
+				
+			switch (Integer.parseInt(input)) { // {Patient:Patient, Nurse} | {Patient: Patient } -> // {Patient:Patient, Nurse} | {Patient: Patient }
 			case 1:  // {Patient:Patient, Nurse} | {Patient:Patient}
 				// Book test appointment
 
@@ -130,7 +126,7 @@ public class main {
 
 				input = scanner.nextLine(); // {Patient:Patient, Nurse} | {Patient:Patient} 
 
-				switch (Integer.parseInt(input)) { // {Patient:Patient} | {Patient:Patient} -> {Patient:Patient} | {Patient:Patient}
+				switch (Integer.parseInt(input)) { // {Patient:Patient, Nurse} | {Patient:Patient} -> {Patient:Patient, Nurse} | {Patient:Patient}
 				case 1:  // {Patient:Patient, Nurse} | {Patient:Patient}
 
 					Date date = new Date(1651838440); // {} | {}
@@ -216,25 +212,26 @@ public class main {
 
 		}
 	}
+	
 
 	// Input: N/A, Output: N/A
-	public static void loggedInNurse() {
-        Scanner scanner = new Scanner(System.in); // {Nurse:Nurse} | {Nurse:Nurse}
+	public static void loggedInNurse() { // {Nurse: Nurse} | {Nurse: Nurse}
+        Scanner scanner = new Scanner(System.in); // {} | {}
 		boolean logout = false; // {Nurse:Nurse} | {Nurse:Nurse}
         Patient p = null; // {Nurse: Nurse} | {Nurse: Nurse}
-        System.out.println("Enter cpr of patient");  // {Nurse:Nurse}
-        String userInput = scanner.nextLine(); // {Nurse:Nurse} | {Nurse:Nurse} -> {Nurse:Nurse} | {Nurse:Nurse}
+        System.out.println("Enter cpr of patient");  // {} | {}
+        String userInput = scanner.nextLine(); // {Nurse:Nurse} | {Nurse:Nurse}
         for(int i = 0; i<patientData.size(); i++) {
-            if (Integer.parseInt(userInput) == patientData.get(i).getCpr()) { // {Nurse: Nurse} | {Nurse: Nurse} == {},{} -> {Nurse: Nurse} | {Nurse: Nurse}
-                //if_acts_for(loggedInNurse, Patient)
-            	// p = (declassify(patientData.get(i),{}))
-                p = patientData.get(i); // {} | {} -> {Nurse: Nurse} | {Nurse: Nurse}
+            if (Integer.parseInt(userInput) == patientData.get(i).getCpr()) { // {Nurse: Nurse} | {Nurse: Nurse} == {Bottom} | {Bottom} -> {Nurse: Nurse} | {Nurse: Nurse}
+                //if_acts_for(loggedInNurse, Patient) [Confidentiality + Integrity] 
+            	// p = (declassify(patientData.get(i), {Bottom} | {Bottom} ))
+                p = patientData.get(i); // {Bottom} | {Bottom} -> {Nurse: Nurse} | {Nurse: Nurse}
 
                 break;
             }
         }
 
-		while(true) {
+		while(true) { // {Nurse: Nurse} | {Nurse: Nurse}
 
 			System.out.println("Welcome, what would you like to do?"); // {} | {}
 			System.out.println("1 to add test result to latest test appointment of patient"); // {} | {}

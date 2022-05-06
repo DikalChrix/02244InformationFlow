@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
  class Patient { // {Patient: Patient, Nurse} | {Patient: Nurse}
-	private int cpr; //{Patient:Patient} | {}
+	private int cpr; //{Patient:Patient} | {Patient: Bottom}
 	private boolean vaccinated; //{Patient:Patient,Nurse} | {Patient: Nurse} 
 	private Date vaccinationDate; //{Patient:Patient,Nurse} | {Patient: Nurse}
 	private ArrayList<TestEvaluation> tests = new ArrayList<TestEvaluation>(); //{Patient:Patient,Nurse} | {Patient: Nurse}
@@ -35,9 +35,9 @@ import java.util.Date;
 		setAppointments(appointmentsNew);  // {Patient:Patient,Nurse} | {Patient:Patient} -> {Patient:Patient,Nurse} | {Patient:Patient}
 	}
 
-	public int getCpr() {// in{Nurse: Nurse},out {Patient:Patient} | {Patient: top}
+	public int getCpr() {// in: N/A, out {Bottom} | {Bottom}
 		//if_acts_for(getCpr, Patient)
-		// cpr = (declassify(cpr,{}))
+		// cpr = (declassify(cpr,{Bottom} | {Bottom})) 
 		return cpr;
 	}
 
