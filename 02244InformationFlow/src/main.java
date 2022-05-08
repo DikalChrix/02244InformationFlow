@@ -34,7 +34,9 @@ public class main {
 
 
 		// Find
-		for (int i = 0; i < patientData.size(); i++) {					
+		for (int i = 0; i < patientData.size(); i++) { 	
+			//if_acts_for(main, Nurse) 
+        	// p = (declassify(patientData.size(), {Bottom} | {Bottom} ))		
 			if (patientData.get(i).getCpr() == userCpr) { // {Bottom} | {Bottom} == {Patient:Patient,Nurse} | {Patient:} -> {Patient:Patient,Nurse} | {Patient:}
 				loggedInPatient(patientData.get(i)); // {Patient:Patient,Nurse} | {Patient:}
 
@@ -221,7 +223,7 @@ public class main {
         Patient p = null; // {Nurse: Nurse} | {Nurse: Nurse}
         System.out.println("Enter cpr of patient");  // {} | {}
         String userInput = scanner.nextLine(); // {Nurse:Nurse} | {Nurse:Nurse}
-        for(int i = 0; i<patientData.size(); i++) {
+        for(int i = 0; i<patientData.size(); i++) { // {Nurse:Nurse} | {Nurse:Nurse}
             if (Integer.parseInt(userInput) == patientData.get(i).getCpr()) { // {Nurse: Nurse} | {Nurse: Nurse} == {Bottom} | {Bottom} -> {Nurse: Nurse} | {Nurse: Nurse}
                 //if_acts_for(loggedInNurse, Patient) [Confidentiality + Integrity] 
             	// p = (declassify(patientData.get(i), {Bottom} | {Bottom} ))
@@ -258,7 +260,7 @@ public class main {
                
                 Date date = new Date(1000000000); // {} | {}
                 Appointment latestAppointment =  new Appointment(date, "", true); // {Nurse:Nurse} | {Nurse:Nurse} -> // {Nurse:Nurse} | {Nurse:Nurse} 
-                for(int i = 0; i<pAppointment.size(); i++){
+                for(int i = 0; i<pAppointment.size(); i++){ // {Nurse:Nurse} | {Nurse:Nurse}
                 	if(!pAppointment.get(i).getType() & pAppointment.get(i).getAppointmentDate().after(latestAppointment.getAppointmentDate())){ // // {Nurse:Nurse} | {Nurse:Nurse} -> {Nurse:Nurse} | {Nurse:Nurse}
                 		latestAppointment = pAppointment.get(i); // {Nurse:Nurse} | {Nurse:Nurse} -> {Nurse:Nurse} | {Nurse:Nurse}
 					}
@@ -277,7 +279,7 @@ public class main {
                 
             case 2: // {Nurse: Nurse}
                 p.setVaccinated(true); // {Nurse: Nurse}
-                for(int i = 0; i<pAppointment.size(); i++){
+                for(int i = 0; i<pAppointment.size(); i++){ // {Nurse:Nurse} | {Nurse:Nurse}
                 	if(pAppointment.get(i).getType()){ // {Nurse:Nurse} | {Nurse:Nurse} -> {Nurse:Nurse} | {Nurse:Nurse}
                 		p.setVaccinationDate((pAppointment.get(i).getAppointmentDate())); // {Nurse:Nurse} | {Nurse:Nurse} -> {Nurse:Nurse} | {Nurse:Nurse}
 					}
@@ -299,7 +301,7 @@ public class main {
             case 5: // {Nurse: Nurse}
                 System.out.println("Enter cpr of patient"); // {} | {}
                 userInput = scanner.nextLine(); // {Nurse:Nurse} | {Nurse:Nurse} -> {Nurse:Nurse} | {Nurse:Nurse}
-                for(int i = 0; i<patientData.size(); i++) {
+                for(int i = 0; i<patientData.size(); i++) { // {Nurse:Nurse} | {Nurse:Nurse}
                     if (Integer.parseInt(userInput) == patientData.get(i).getCpr()) { // {Nurse: Nurse} | {Nurse: Nurse} == {},{} -> {Nurse: Nurse} | {Nurse: Nurse}
 						//if_acts_for(loggedInNurse, Patient)
                         // p = (declassify(patientData.get(i),{}))
@@ -334,7 +336,7 @@ public class main {
 		int daysBetween = (int) Duration.between(prevDate,LDTcurrentDate).toDays(); // {Nurse: Nurse} | {Nurse: Nurse}
 		int sumPosTests=0; // {Nurse: Nurse} | {Nurse: Nurse}
 		int sumTests=0; // {Nurse: Nurse} | {Nurse: Nurse}
-		for (int i=0; i<patientData.size() ;i++){
+		for (int i=0; i<patientData.size() ;i++){ // {Nurse:Nurse} | {Nurse:Nurse}
             //if_acts_for(pctPositive, Patient)
             // ArrayList<TestEvaluation> currPatientTests = (declassify(patientData.get(i).getTests(),{}))
 			ArrayList<TestEvaluation> currPatientTests = patientData.get(i).getTests(); // {Patient:Patient,Nurse} | {Patient: Nurse} -> {Patient:Patient,Nurse} | {Patient: Nurse}
@@ -351,8 +353,8 @@ public class main {
 				}
 			}
 		}
-		if(sumTests==0){ // {} | {}
-			sumTests = 1;
+		if(sumTests==0){ // {Nurse: Nurse} | {Nurse: Nurse}
+			sumTests = 1; // {Nurse: Nurse} | {Nurse: Nurse}
 		}
 		//if_acts_for(pctPositive, Nurse)
         // return = (declassify(100*sumPosTests/sumTests,{}))
@@ -368,7 +370,7 @@ public class main {
 
 		int daysBetween = (int) Duration.between(prevDate,LDTcurrentDate).toDays(); //  {Nurse: Nurse}
 		int sumVaccs=0; //  {Nurse: Nurse}
-		for (int i=0; i<patientData.size() ;i++){
+		for (int i=0; i<patientData.size() ;i++){ // {Nurse:Nurse} | {Nurse:Nurse}
             //if_acts_for(numVaccinated, Patient)
             // ArrayList<Appointment> patientAppointments = (declassify(patientData.get(i).getAppointments(),{}))
 			ArrayList<Appointment> patientAppointments = patientData.get(i).getAppointments(); // {} | {} -> {Nurse: Nurse} | {Nurse: Nurse}
