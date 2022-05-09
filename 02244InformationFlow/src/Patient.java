@@ -9,14 +9,14 @@ import java.util.Date;
 	private ArrayList<Appointment> appointments = new ArrayList<Appointment>(); //{Patient:Patient,Nurse} | {Patient: Patient}
 	
 	
-	 Patient(int cprInit, boolean vaccinatedInit, Date vaccinationDateInit) { // used to set "database" up
+	 Patient(int cprInit, boolean vaccinatedInit, Date vaccinationDateInit) { // used to set "database" up // Input: {Patient:Patient} | {Patient: Nurse } , Output: {Patient:Patient,Nurse} | {Patient: Nurse}
 		setCpr(cprInit);
 		setVaccinated(vaccinatedInit);
 		setVaccinationDate(vaccinationDateInit);
 		
 	}
 	
-	 void addTestEvaluation(Date date, boolean testResult) { // in{Patient:Patient,Nurse} | {Patient:Nurse} ,out{Patient:Patient,Nurse} | {Patient: Nurse}
+	 void addTestEvaluation(Date date, boolean testResult) { // Input: {Patient:Patient,Nurse} | {Patient:Nurse}, Body: {Patient:Patient,Nurse} | {Patient:Nurse} 
 		
 		TestEvaluation testEvaluation = new TestEvaluation(date, testResult); //{Patient:Patient,Nurse} | {Patient: Nurse} -> {Patient:Patient,Nurse} | {Patient: Nurse}
 		
@@ -26,7 +26,7 @@ import java.util.Date;
 		
 	}
 	
-	 void addAppointment(Date date, boolean type, String location) { // in{Patient:Patient,Nurse} | {Patient: Patient} ,out{Patient:Patient,Nurse} | {Patient: Patient}
+	 void addAppointment(Date date, boolean type, String location) { // Input: {Patient:Patient,Nurse} | {Patient: Patient}, Body: {Patient:Patient,Nurse} | {Patient: Patient}
 		
 		Appointment appointment = new Appointment(date, location, type); //{Patient:Patient,Nurse} | {Patient:Patient} -> {Patient:Patient,Nurse} | {Patient:Patient}
 		
@@ -35,52 +35,52 @@ import java.util.Date;
 		setAppointments(appointmentsNew);  // {Patient:Patient,Nurse} | {Patient:Patient} -> {Patient:Patient,Nurse} | {Patient:Patient}
 	}
 
-	public int getCpr() {// in: N/A, out {Bottom} | {Bottom}
+	public int getCpr() {// Output: {Bottom} | {Bottom}
 		//if_acts_for(getCpr, Patient)
 		// cpr = (declassify(cpr,{Bottom} | {Bottom})) 
 		return cpr;
 	}
 
-	public void setCpr(int cpr) { // //in{Patient:Patient} | {Patient: top} ,out{Patient:Patient,Nurse} | {Patient: Nurse}
+	public void setCpr(int cpr) { // Input: {Patient:Patient} | {Patient: } , Body: {Patient:Patient,Nurse} | {Patient:}
 		this.cpr = cpr;
 	}
 
-	public boolean isVaccinated() { // In: N/A,out{Patient:Patient,Nurse} | {Patient: Nurse}
+	public boolean isVaccinated() { // Output: {Patient:Patient,Nurse} | {Patient: Nurse}
 		return vaccinated;
 	}
 
-	public void setVaccinated(boolean vaccinated) { //in{Patient:Patient} | {Patient: top,Nurse} ,out{Patient:Patient,Nurse} | {Patient: Nurse}
+	public void setVaccinated(boolean vaccinated) { // Input: {Patient:Patient} | {Patient: Nurse } , Body: {Patient:Patient,Nurse} | {Patient: Nurse}
 		this.vaccinated = vaccinated;
 	}
 
-	public Date getVaccinationDate() {  // in N/A,out{Patient:Patient,Nurse} | {Patient:Patient,Nurse}
+	public Date getVaccinationDate() {  // Output: {Patient:Patient,Nurse} | {Patient: Nurse}
 		return vaccinationDate;
 	}
 
-	public void setVaccinationDate(Date vaccinationDate) { // //in{Patient:Patient} | {Patient: top,Nurse} ,out{Patient:Patient,Nurse} | {Patient: Nurse}
+	public void setVaccinationDate(Date vaccinationDate) { // Input: {Patient:Patient} | {Patient: Nurse } , Body: {Patient:Patient,Nurse} | {Patient: Nurse}
 		this.vaccinationDate = vaccinationDate;
 	}
 
-	public ArrayList<TestEvaluation> getTests() { // In: N/A,out{Patient:Patient,Nurse} | {Patient: Nurse}
+	public ArrayList<TestEvaluation> getTests() { // Output: {Patient:Patient,Nurse} | {Patient: Nurse}
 		return tests;
 	}
 
-	public void setTests(ArrayList<TestEvaluation> tests) { // in{Patient:Patient,Nurse} | {Patient: Nurse},out {Patient:Patient,Nurse} | {Patient: Nurse}
+	public void setTests(ArrayList<TestEvaluation> tests) { // Input: {Patient:Patient} | {Patient: Nurse } , Body: {Patient:Patient,Nurse} | {Patient: Nurse}
 		this.tests = tests;
 	}
 
-	public TestEvaluation getTest(int testNr) { // in{Patient:Patient,Nurse} | {Patient: Nurse}, out{Patient:Patient,Nurse} | {Patient: Nurse}
-		int testLen = this.getTests().size(); // {Patient:Patient,Nurse} | {Patient: Nurse}
-		if (testLen>0) {
-			return tests.get(testNr);
+	public TestEvaluation getTest(int testNr) { // Input: {Patient:Patient} | {Patient: Nurse } , Output: {Patient:Patient,Nurse} | {Patient: Nurse}
+		int testLen = this.getTests().size(); // {Patient:Patient,Nurse} | {Patient: Nurse} -> {Patient:Patient,Nurse} | {Patient: Nurse} 
+		if (testLen>0) { // {Patient:Patient,Nurse} | {Patient: Nurse} -> {Patient:Patient,Nurse} | {Patient: Nurse} 
+			return tests.get(testNr); // {Patient:Patient,Nurse} | {Patient: Nurse}
 		}else{return null;}
 	}
 
-	public ArrayList<Appointment> getAppointments() { // In: N/A,out{Patient:Patient,Nurse} | {Patient: Patient}
+	public ArrayList<Appointment> getAppointments() { // Output: {Patient:Patient,Nurse} | {Patient: Patient}
 		return appointments;
 	} 
 
-	public void setAppointments(ArrayList<Appointment> appointments) { // in{Patient:Patient,Nurse} | {Patient: Patient},out{Patient:Patient,Nurse} | {Patient: Patient}
+	public void setAppointments(ArrayList<Appointment> appointments) { // Input: {Patient:Patient} | {Patient: Patient } , Body: {Patient:Patient,Nurse} | {Patient: Patient}
 		this.appointments = appointments;
 	}
 
