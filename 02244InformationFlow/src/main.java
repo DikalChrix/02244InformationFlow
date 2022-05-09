@@ -62,13 +62,13 @@ public class main {
 		System.out.println("1: Login to the system"); // {} | {}
 		System.out.println("2: Print statistical reprot"); // {} | {}
         System.out.println("3: Login as nurse"); // {} | {}
-		String publicInput = scanner.nextLine(); // {Bottom} | {Bottom}
+		String publicInput = scanner.nextLine(); // {Bottom} | {Bottom} -> {Bottom} | {Bottom}
 
 		switch (Integer.parseInt(publicInput)) { // {Bottom} | {Bottom} -> {Bottom} | {Bottom}
 		case 1: // {Patient: Patient} | {Patient: Patient}
 			while (true) { // {Bottom} | {Bottom} -> {Patient: Patient} | {Patient: Patient}
 				System.out.println("Please input your cpr:"); // {} | {}
-				String patientInput = scanner.nextLine(); // {Patient: Patient} | {Patient: Patient} 
+				String patientInput = scanner.nextLine(); // {Bottom} | {Bottom} -> {Patient: Patient} | {Patient: Patient} 
 					if(true) { // {Bottom} | {Bottom} -> {Patient: Patient} | {Patient: Patient} 
 						return Integer.parseInt(patientInput); // {Patient: Patient} | {Patient: Patient} 
 					}
@@ -116,10 +116,10 @@ public class main {
 			System.out.println("4 to see vaccination results"); // {} | {}
 			System.out.println("5 to logout"); // {} | {}
 
-			String input = scanner.nextLine(); // {Patient:Patient, Nurse} | {Patient: }
+			String input = scanner.nextLine(); // {Bottom} | {Bottom} -> {Patient:Patient, Nurse} | {Patient: }
 				
-			switch (Integer.parseInt(input)) { // {Patient:Patient, Nurse} | {Patient:  } -> // {Patient:Patient, Nurse} | {Patient: Patient }
-			case 1:  // {Patient:Patient, Nurse} | {Patient:Patient}
+			switch (Integer.parseInt(input)) { // {Patient:Patient, Nurse} | {Patient:  } -> // {Patient:Patient, Nurse} | {Patient:  }
+			case 1:  // {Patient:Patient, Nurse} | {Patient: }
 				// Book test appointment
 
 				System.out.println("Possible locations and dates for testing: "); // {} | {}
@@ -127,9 +127,9 @@ public class main {
 				System.out.println("2: Lyngby, 13th May 2022 09:40 "); // {} | {}
 				System.out.println("3: Holte, 15th May 2022 17:25 "); // {} | {}
 
-				input = scanner.nextLine(); // {Patient:Patient, Nurse} | {Patient:Patient} 
+				input = scanner.nextLine(); // {Bottom} | {Bottom} -> {Patient:Patient, Nurse} | {Patient: } 
 
-				switch (Integer.parseInt(input)) { // {Patient:Patient, Nurse} | {Patient:Patient} -> {Patient:Patient, Nurse} | {Patient:Patient}
+				switch (Integer.parseInt(input)) { // {Patient:Patient, Nurse} | {Patient: } -> {Patient:Patient, Nurse} | {Patient:Patient}
 				case 1:  // {Patient:Patient, Nurse} | {Patient:Patient}
 
 					Date date = new Date(1651838440); // {Bottom} | {Bottom} -> {Patient:Patient, Nurse} | {Patient:Patient}
@@ -151,12 +151,12 @@ public class main {
 					patient.addAppointment(date3, false, "Holte"); // {Patient:Patient,Nurse} | {Patient: Patient}
 					System.out.println("Test appointment booked!"); // {} | {}
 					break;
-				default:
+				default: // {} | {}
 					break;
 				}
 
 				break;
-			case 2: // {Patient:Patient, Nurse} | {Patient:Patient}
+			case 2: // {Patient:Patient, Nurse} | {Patient: }
 				// Book vaccination appointment
 
 				System.out.println("Possible locations and dates for vaccination: "); // {} | {}
@@ -164,9 +164,9 @@ public class main {
 				System.out.println("2: Lyngby, 13th May 2022 09:40 "); // {} | {}
 				System.out.println("3: Holte, 15th May 2022 17:25 "); // {} | {}
 
-				input = scanner.nextLine(); // {Patient:Patient, Nurse} | {Patient:Patient}
+				input = scanner.nextLine(); // {Bottom} | {Bottom} -> {Patient:Patient, Nurse} | {Patient: }
 
-				switch (Integer.parseInt(input)) { // {Patient:Patient} | {Patient:Patient}  -> {Patient:Patient} | {Patient:Patient}
+				switch (Integer.parseInt(input)) { // {Patient:Patient} | {Patient: }  -> {Patient:Patient} | {Patient:Patient}
 				case 1: // {Patient:Patient, Nurse} | {Patient:Patient}
 
 					Date date = new Date(1651838440); // {Bottom} | {Bottom} -> {Patient:Patient, Nurse} | {Patient:Patient}
@@ -188,7 +188,7 @@ public class main {
 					patient.addAppointment(date3, true, "Holte"); // {Patient:Patient,Nurse} | {Patient: Patient}
 					System.out.println("Vaccination appointment booked!"); // {} | {}
 					break; 
-				default:
+				default: // {} | {}
 					break;
 				}
 				break;
@@ -223,7 +223,7 @@ public class main {
 		boolean logout = false; // {Bottom} | {Bottom} -> {Nurse:Nurse} | {Nurse:Nurse}
         Patient p = null; // {Bottom} | {Bottom} -> {Nurse: Nurse} | {Nurse: Nurse}
         System.out.println("Enter cpr of patient");  // {} | {}
-        String userInput = scanner.nextLine(); // {Nurse:Nurse} | {Nurse:Nurse}
+        String userInput = scanner.nextLine(); // {Bottom} | {Bottom} -> {Nurse:Nurse} | {Nurse:Nurse}
         for(int i = 0; i<patientData.size(); i++) { // {Nurse:Nurse} | {Nurse:Nurse} -> {Nurse:Nurse} | {Nurse:Nurse}
             if (Integer.parseInt(userInput) == patientData.get(i).getCpr()) { // {Nurse:Nurse} | {Nurse:Nurse} -> {Nurse:Nurse} | {Nurse:Nurse}
                 //if_acts_for(loggedInNurse, Patient) 
@@ -242,7 +242,7 @@ public class main {
 			System.out.println("4 to see vaccination status of patient"); // {} | {}
             System.out.println("5 to select another patient"); // {} | {}
 			System.out.println("6 to logout"); // {} | {}
-            userInput = scanner.nextLine(); // {Nurse:Nurse} | {Nurse:Nurse}
+            userInput = scanner.nextLine(); // {Bottom} | {Bottom} -> {Nurse:Nurse} | {Nurse:Nurse}
             
             ArrayList <Appointment> pAppointment = p.getAppointments(); // {Nurse:Nurse} | {Nurse:Nurse} -> {Nurse:Nurse} | {Nurse:Nurse}
             
@@ -254,7 +254,7 @@ public class main {
             	System.out.println("0 for Negative"); // {} | {}
             	System.out.println("1 for Positive"); // {} | {}
             	
-            	userInput = scanner.nextLine(); // {Nurse:Nurse} | {Nurse:Nurse}
+            	userInput = scanner.nextLine(); // {Bottom} | {Bottom} -> {Nurse:Nurse} | {Nurse:Nurse}
             	            	
             	// Find latest appointment         
                
@@ -300,7 +300,7 @@ public class main {
 
             case 5: // {Nurse: Nurse}
                 System.out.println("Enter cpr of patient"); // {} | {}
-                userInput = scanner.nextLine(); // {Nurse:Nurse} | {Nurse:Nurse}
+                userInput = scanner.nextLine(); // {Bottom} | {Bottom} -> {Nurse:Nurse} | {Nurse:Nurse}
                 for(int i = 0; i<patientData.size(); i++) { // {Nurse: Nurse} | {Nurse: Nurse} -> {Nurse: Nurse} | {Nurse: Nurse}
                     if (Integer.parseInt(userInput) == patientData.get(i).getCpr()) { // {Nurse: Nurse} | {Nurse: Nurse} -> {Nurse: Nurse} | {Nurse: Nurse}
 						//if_acts_for(loggedInNurse, Patient)
@@ -324,7 +324,7 @@ public class main {
 		}
 
 	}
-
+	
 	// Input: {Bottom} | {Bottom}, Output: {Bottom} | {Bottom}
 	public static int pctPositive(int days){
 		Date currentDate = new Date(); // {Bottom} | {Bottom} -> {Bottom} | {Bottom}
